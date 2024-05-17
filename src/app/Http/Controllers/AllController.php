@@ -11,9 +11,9 @@ class AllController extends Controller
 {
     public function shop_all()
     {
-        // $shops = Shop::all();
+        $shops = Shop::all();
 
-        return view('shop_all');
+        return view('shop_all', ['shops' => $shops]);
 
     }
 
