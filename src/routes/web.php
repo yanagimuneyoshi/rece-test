@@ -1,6 +1,8 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AllController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [AllController::class, 'shop_all']);
+
+Route::get('/menu1', [AllController::class, 'menu1']);
+
+Route::get('/menu2', [AllController::class, 'menu2']);
+
+Route::get('/register', [AllController::class, 'register'])->name('register');
+Route::post('/register', [AllController::class, 'processRegister']);
+
+Route::get('/thanks', [AllController::class, 'thanks'])->name('thanks');
+
+Route::get('/login', [AllController::class, 'login'])->name('login');
+Route::post('/login', [AllController::class, 'processLogin']);
+
+Route::get('/my_page', [AllController::class, 'my_page']);
+
+Route::get('/detail/{shop_id}', [AllController::class, 'shop_detail']);
+
+Route::get('/done', [AllController::class, 'done']);
+
+Route::get('/shop_detail', [AllController::class, 'shop_detail']);
