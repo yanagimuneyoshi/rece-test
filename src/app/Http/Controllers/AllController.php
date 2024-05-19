@@ -6,20 +6,43 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
+use App\Models\Area;
+use App\Models\Genre;
+
+
 
 class AllController extends Controller
 {
-    public function shop_all()
+    public function shop_all(Request $request)
     {
-        $shops = Shop::all();
+    // $shops = Shop::all();
 
-        return view('shop_all', ['shops' => $shops]);
+    // return view('shop_all', ['shops' => $shops]);
+    $areas = Area::all();
+    $genres = Genre::all();
+    $shops = Shop::query();
+
+    if ($request->filled('area_id')) {
+      $shops->where('area_id', $request->area_id);
+    }
+
+    if ($request->filled('genre_id')) {
+      $shops->where('genre_id', $request->genre_id);
+    }
+
+    if ($request->filled('search')) {
+      $shops->where('name', 'like', '%' . $request->search . '%');
+    }
+
+    $shops =  $shops->with(['area', 'genre'])->get();
+
+    return view('shop_all', compact('areas', 'genres', 'shops'));
 
     }
 
     public function register()
     {
-        return view('register');
+        return view('auth/register');
     }
 
   public function shop_detail()
@@ -49,7 +72,7 @@ class AllController extends Controller
 
   public function login()
   {
-    return view('login');
+    return view('auth/login');
   }
 
 

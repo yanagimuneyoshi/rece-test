@@ -40,3 +40,8 @@ Route::get('/detail/{shop_id}', [AllController::class, 'shop_detail']);
 Route::get('/done', [AllController::class, 'done']);
 
 Route::get('/shop_detail', [AllController::class, 'shop_detail']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/shops', [AllController::class, 'shop_all'])->name('shops.index');
+    Route::get('/my_page', [AllController::class, 'my_page']);
+});
