@@ -20,6 +20,7 @@ use App\Http\Controllers\AllController;
 // });
 
 Route::get('/', [AllController::class, 'shop_all']);
+Route::post('/search', [AllController::class, 'shop_all']);
 
 Route::get('/menu1', [AllController::class, 'menu1']);
 

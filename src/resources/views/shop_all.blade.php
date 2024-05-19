@@ -23,8 +23,9 @@
       <div class="rese">
         <p>RESE</p>
       </div>
-      <div data-v-56ac30e2="" class="search">
-        <form method="GET" action="{{ url('/shops') }}">
+      <form class="search-form" action="/search" method="post">
+      @csrf
+        <div data-v-56ac30e2="" class="search">
           <div data-v-56ac30e2="" class="area">
             <select data-v-56ac30e2="" name="area_id">
               <option data-v-56ac30e2="" value="" selected="selected">All area</option>
@@ -33,8 +34,6 @@
               @endforeach
             </select>
           </div>
-        </form>
-        <form method="GET" action="{{ url('/shops') }}">
           <div data-v-56ac30e2="" class="genre">
             <select data-v-56ac30e2="" name="genre_id">
               <option data-v-56ac30e2="" value="" selected="selected">All genre</option>
@@ -43,21 +42,20 @@
               @endforeach
             </select>
           </div>
-        </form>
-        <div data-v-56ac30e2="" class="research">
-          <i data-v-56ac30e2="" class="fas fa-search check"></i>
-          <input data-v-56ac30e2="" type="text" name="search" placeholder="Search…">
-          <button type="submit" class="btn btn-primary" style="display:none;">検索</button>
-        </div>
-        <!-- <div data-v-56ac30e2="" class="research">
+          <div data-v-56ac30e2="" class="research">
+            <i data-v-56ac30e2="" class="fas fa-search check"></i>
+            <input data-v-56ac30e2="" type="text" name="search" placeholder="Search…">
+            <button type="submit" class="btn btn-primary" style="display:none;">検索</button>
+          </div>
+          <!-- <div data-v-56ac30e2="" class="research">
             <i data-v-56ac30e2="" class="fas fa-search check"></i>
             <input data-v-56ac30e2="" type="text" name="search" placeholder="Search…">
             <button type="submit" class="btn btn-primary">検索</button>
           </div> -->
-        </form>
-      </div>
+      </form>
+    </div>
 
-      <!-- <div data-v-56ac30e2="" class="search">
+    <!-- <div data-v-56ac30e2="" class="search">
         <form method="GET" action="{{ url('/shops') }}">
           <div data-v-56ac30e2="" class="area">
             <select data-v-56ac30e2="" name="area">
@@ -80,40 +78,40 @@
             </select>
           </form>
         </div> -->
-      <!-- <div data-v-56ac30e2="" class="research">
+    <!-- <div data-v-56ac30e2="" class="research">
         <i data-v-56ac30e2="" class="fas fa-search check"></i>
         <input data-v-56ac30e2="" type="text" placeholder="Search…">
       </div> -->
-    </div>
-    <div class="album py-5 bg-light">
-      <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
-          @foreach ($shops ?? '' as $shop)
-          <div class="col">
-            <div class="card shadow-sm">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-              </svg>
-              <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <p class="shop_name">{{ $shop['name'] }}</p>
-                    <p class="area">#{{ $shop->area->name }}</p>
-                    <p class="genre">#{{ $shop->genre->name }}</p>
-                    <button class="btn btn-primary" onclick="window.location.href='/detail/{shop_id'">詳しく見る</button>
-
-                  </div>
+  </div>
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+        @foreach ($shops ?? '' as $shop)
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+            </svg>
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <p class="shop_name">{{ $shop['name'] }}</p>
+                  <p class="area">#{{ $shop->area->name }}</p>
+                  <p class="genre">#{{ $shop->genre->name }}</p>
+                  <button class="btn btn-primary" onclick="window.location.href='/detail/{shop_id'">詳しく見る</button>
 
                 </div>
-                <i class=" far fa-heart favorite-heart"></i>
+
               </div>
+              <i class=" far fa-heart favorite-heart"></i>
             </div>
           </div>
-          @endforeach
         </div>
+        @endforeach
       </div>
     </div>
+  </div>
   </div>
   <div data-v-56ac30e2="" class="flex"></div>
   </div>
