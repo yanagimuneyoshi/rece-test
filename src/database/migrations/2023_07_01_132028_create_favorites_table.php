@@ -15,12 +15,13 @@ class CreateFavoritesTable extends Migration
   {
     Schema::create('favorites', function (Blueprint $table) {
       $table->id();
-      $table->string('shop_ID')->references('shopID')->on('shops');
-      $table->string('user_ID')->references('userID')->on('users');
+      $table->unsignedBigInteger('shop_id');
+      $table->unsignedBigInteger('user_id');
       $table->timestamps();
 
-      // $table->foreign('shop_ID')->references('shopID')->on('shops');
-      // $table->foreign('user_ID')->references('userID')->on('users');
+      // 外部キー制約を追加します
+      $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
+      $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
     });
   }
 

@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AllController;
+use App\Http\Controllers\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,3 +47,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/shops', [AllController::class, 'shop_all'])->name('shops.index');
     Route::get('/my_page', [AllController::class, 'my_page']);
 });
+
+Route::post('/favorite/toggle/{shopId}', [FavoriteController::class, 'toggleFavorite'])->middleware('auth');
+Route::post('/favorite/toggle/{shopId}', [FavoriteController::class, 'toggleFavorite'])->middleware('auth');

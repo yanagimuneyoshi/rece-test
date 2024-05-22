@@ -7,6 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
   <meta name="generator" content="Hugo 0.84.0">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Document</title>
   <link rel="stylesheet" href="css/shop_all.css" />
   <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
@@ -24,7 +25,7 @@
         <p>RESE</p>
       </div>
       <form class="search-form" action="/search" method="post">
-      @csrf
+        @csrf
         <div data-v-56ac30e2="" class="search">
           <div data-v-56ac30e2="" class="area">
             <select data-v-56ac30e2="" name="area_id">
@@ -104,7 +105,7 @@
                 </div>
 
               </div>
-              <i class=" far fa-heart favorite-heart"></i>
+              <i class="far fa-heart favorite-heart" data-shop-id="{{ $shop->id }}"></i>
             </div>
           </div>
         </div>
@@ -122,9 +123,28 @@
       const favoriteHearts = document.querySelectorAll('.favorite-heart');
       favoriteHearts.forEach((heart) => {
         heart.addEventListener('click', (event) => {
-          event.currentTarget.classList.toggle('fas');
-          event.currentTarget.classList.toggle('far');
-          event.currentTarget.classList.toggle('text-danger');
+          const target = event.currentTarget;
+          const shopId = target.dataset.shopId; // データ属性からショップIDを取得
+          const isFavorited = target.classList.contains('fas');
+
+          fetch(`/favorite/toggle/${shopId}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRFトークンを設定
+              },
+              body: JSON.stringify({
+                isFavorited: !isFavorited
+              })
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.status === 'success') {
+                target.classList.toggle('fas');
+                target.classList.toggle('far');
+                target.classList.toggle('text-danger');
+              }
+            });
         });
       });
     });
