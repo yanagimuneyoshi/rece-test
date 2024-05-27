@@ -100,7 +100,7 @@
                   <p class="shop_name">{{ $shop['name'] }}</p>
                   <p class="area">#{{ $shop->area->name }}</p>
                   <p class="genre">#{{ $shop->genre->name }}</p>
-                  <button class="btn btn-primary" onclick="window.location.href='/detail/{shop_id'">詳しく見る</button>
+                  <button class="btn btn-primary" onclick="window.location.href='/detail/{{ $shop->id }}'">詳しく見る</button>
 
                 </div>
 

@@ -33,6 +33,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/menu2', [AllController::class, 'menu2']);
     Route::post('/favorite/toggle/{shopId}', [FavoriteController::class, 'toggleFavorite']);
     Route::get('/done', [AllController::class, 'done']);
-    Route::get('/detail/{shop_id}', [AllController::class, 'shop_detail']);
+    Route::get('/detail/{shop_id}', [AllController::class, 'shop_detail'])->name('shop.detail');
     Route::get('/shop_detail', [AllController::class, 'shop_detail']);
 });

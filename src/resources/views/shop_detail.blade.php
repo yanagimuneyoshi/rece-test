@@ -23,13 +23,18 @@
     <div class="left-section">
       <h2>お店名</h2>
       <img src="path_to_image" alt="お店の写真">
+      <p class="shop_name">{{ $shop['name'] }}</p>
       <p>エリア: エリア名</p>
+      <p class="area">#{{ $shop->area->name }}</p>
       <p>ジャンル: ジャンル名</p>
+      <p class="genre">#{{ $shop->genre->name }}</p>
       <div class="about">
         <h3>About</h3>
         <p>お店の説明文など</p>
+        <p>{{ $shop->description }}</p>
       </div>
     </div>
+
 
     <div class="right-section">
       <h2>予約する</h2>
@@ -46,7 +51,7 @@
         <div class="form-group">
           <label for="guests">人数</label>
           <select id="guests" name="guests" onchange="displaySelectedGuests()" required>
-            <option value="1">1</option>
+            <!-- <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -55,14 +60,17 @@
             <option value="7">7</option>
             <option value="8">8</option>
             <option value="9">9</option>
-            <option value="10">10</option>
+            <option value="10">10</option> -->
+            @for ($i = 1; $i <= 10; $i++) <option value="{{ $i }}">{{ $i }}</option>
+              @endfor
           </select>
         </div>
       </form>
 
       <div class="reservation-summary">
         <h2>予約内容</h2>
-        <p>店舗名: ショップ名</p>
+        <p>店舗名:</p>
+        <p class="shop_name">{{ $shop['name'] }}</p>
         <!-- <p>日付: 選択された日付</p> -->
         <p id="selectedDate">日付: 選択された日付</p>
         <!-- <p>時間: 選択された時間</p> -->

@@ -45,9 +45,11 @@ class AllController extends Controller
         return view('auth/register');
     }
 
-  public function shop_detail()
+  public function shop_detail($shop_id)
   {
-    return view('shop_detail');
+    $shop = Shop::with('area', 'genre')->findOrFail($shop_id);
+    return view('shop_detail', compact('shop'));
+    // return view('shop_detail');
   }
 
   public function thanks()
