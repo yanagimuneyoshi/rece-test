@@ -21,7 +21,8 @@
 <div class="done">
   <div class="done-message">
     <div class="message">ご予約ありがとうございます</div>
-    <button class="back-button">戻る</button>
+    <a href="/" button class="back-button">戻る</a></button>
+      <!-- <button class="back-button" onclick="history.back()">戻る</button> -->
   </div>
 </div>
 </body>

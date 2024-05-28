@@ -35,4 +35,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/done', [AllController::class, 'done']);
     Route::get('/detail/{shop_id}', [AllController::class, 'shop_detail'])->name('shop.detail');
     Route::get('/shop_detail', [AllController::class, 'shop_detail']);
+    // 予約保存のルート
+    Route::post('/reserve', [AllController::class, 'storeReserve'])->name('reserve.store');
+
+    // 予約完了ページのルート
+    Route::get('/done', [AllController::class, 'done'])->name('done');
 });

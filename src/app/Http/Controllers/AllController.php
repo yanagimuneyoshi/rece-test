@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
 use App\Models\Area;
 use App\Models\Genre;
+use App\Models\Reserve;
 
 
 
@@ -127,4 +128,25 @@ class AllController extends Controller
     }
   }
 
+  public function storeReserve(Request $request)
+  {
+    $request->validate([
+      'shop_id' => 'required|exists:shops,id',
+      'date' => 'required|date',
+      'time' => 'required',
+      'guests' => 'required|integer|min:1',
+    ]);
+
+    Reserve::create([
+      'shop_id' => $request->shop_id,
+      'user_id' => Auth::id(),
+      'date' => $request->date,
+      'time' => $request->time,
+      'people' => $request->guests,
+    ]);
+
+    return redirect()->route('done');
   }
+
+}
+
