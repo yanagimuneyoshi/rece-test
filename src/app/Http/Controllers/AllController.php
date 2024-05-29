@@ -9,16 +9,12 @@ use App\Models\Shop;
 use App\Models\Area;
 use App\Models\Genre;
 use App\Models\Reserve;
-
-
+use App\Models\Favorite;
 
 class AllController extends Controller
 {
-    public function shop_all(Request $request)
-    {
-    // $shops = Shop::all();
-
-    // return view('shop_all', ['shops' => $shops]);
+  public function shop_all(Request $request)
+  {
     $areas = Area::all();
     $genres = Genre::all();
     $shops = Shop::query();
@@ -35,22 +31,20 @@ class AllController extends Controller
       $shops->where('name', 'like', '%' . $request->search . '%');
     }
 
-    $shops =  $shops->with(['area', 'genre'])->get();
+    $shops = $shops->with(['area', 'genre'])->get();
 
     return view('shop_all', compact('areas', 'genres', 'shops'));
+  }
 
-    }
-
-    public function register()
-    {
-        return view('auth/register');
-    }
+  public function register()
+  {
+    return view('auth/register');
+  }
 
   public function shop_detail($shop_id)
   {
     $shop = Shop::with('area', 'genre')->findOrFail($shop_id);
     return view('shop_detail', compact('shop'));
-    // return view('shop_detail');
   }
 
   public function thanks()
@@ -78,15 +72,14 @@ class AllController extends Controller
     return view('auth/login');
   }
 
-
-
   public function my_page()
   {
-    return view('my_page');
+    $user = Auth::user();
+    $reservations = Reserve::where('user_id', $user->id)->with('shop')->get();
+    $favorites = Favorite::where('user_id', $user->id)->with('shop.area', 'shop.genre')->get();
+
+    return view('my_page', compact('reservations', 'favorites'));
   }
-
-
-
 
   public function processRegister(Request $request)
   {
@@ -94,13 +87,10 @@ class AllController extends Controller
     $email = $request->input('email');
     $password = $request->input('password');
 
-
     $existingUser = User::where('email', $email)->first();
     if ($existingUser) {
-
       return back()->withErrors(['email' => 'メールアドレス 重複エラー']);
     }
-
 
     $user = new User();
     $user->name = $username;
@@ -108,22 +98,17 @@ class AllController extends Controller
     $user->password = bcrypt($password);
     $user->save();
 
-
     return redirect('/thanks');
   }
 
   public function processLogin(Request $request)
   {
-
     $email = $request->input('email');
     $password = $request->input('password');
 
-
     if (Auth::attempt(['email' => $email, 'password' => $password])) {
-
       return redirect('/menu1');
     } else {
-
       return back()->withErrors(['login_error' => 'メールアドレスまたはパスワードが違います。']);
     }
   }
@@ -147,6 +132,4 @@ class AllController extends Controller
 
     return redirect()->route('done');
   }
-
 }
-

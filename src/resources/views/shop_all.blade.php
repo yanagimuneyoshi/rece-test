@@ -21,6 +21,19 @@
       <div class="menu-button">
         <a href="/menu2"><button id="btn_menu8" class="btn_menu"><span>MENU</span></button></a>
       </div>
+      <!-- <nav class="header__nav nav" id="js-nav">
+        <ul class="nav__items nav-items">
+          <li class="nav-items__item"><a href="/">HOME</a></li>
+          <li class="nav-items__item"><a href="/register">Register</a></li>
+          <li class="nav-items__item"><a href="/login">Login</a></li>
+        </ul>
+      </nav>
+      <button class="header__hamburger hamburger" id="js-hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button> -->
+    </div>
       <div class="rese">
         <p>RESE</p>
       </div>
@@ -120,6 +133,18 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // ハンバーガーメニューの処理
+      // const ham = document.querySelector('#js-hamburger');
+      // const nav = document.querySelector('#js-nav');
+
+      // ham.addEventListener('click', function() {
+      //   ham.classList.toggle('active');
+      //   nav.classList.toggle('active');
+      // });
+
+
+      // お気に入りハートの処理
+
       const favoriteHearts = document.querySelectorAll('.favorite-heart');
       favoriteHearts.forEach((heart) => {
         heart.addEventListener('click', (event) => {

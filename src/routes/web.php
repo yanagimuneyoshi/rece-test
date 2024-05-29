@@ -27,7 +27,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [AllController::class, 'shop_all']);
     Route::post('/search', [AllController::class, 'shop_all']);
     Route::get('/shops', [AllController::class, 'shop_all'])->name('shops.index');
-    Route::get('/my_page', [AllController::class, 'my_page']);
+    // Route::get('/my_page', [AllController::class, 'my_page']);
+    Route::get('/my_page', [AllController::class, 'my_page'])->name('my_page');
     Route::get('/thanks', [AllController::class, 'thanks'])->name('thanks');
     Route::get('/menu1', [AllController::class, 'menu1']);
     Route::get('/menu2', [AllController::class, 'menu2']);
