@@ -19,7 +19,7 @@
   <div id="app">
     <div data-v-56ac30e2="" id="app">
       <div class="menu-button">
-        <a href="/menu2"><button id="btn_menu8" class="btn_menu"><span>MENU</span></button></a>
+        <a href="/menu1"><button id="btn_menu8" class="btn_menu"><span>MENU</span></button></a>
       </div>
       <!-- <nav class="header__nav nav" id="js-nav">
         <ul class="nav__items nav-items">
@@ -118,7 +118,9 @@
                 </div>
 
               </div>
-              <i class="far fa-heart favorite-heart" data-shop-id="{{ $shop->id }}"></i>
+              <!-- <i class="far fa-heart favorite-heart" data-shop-id="{{ $shop->id }}"></i> -->
+              <i class="{{ $shop->isFavorite ? 'fas' : 'far' }} fa-heart favorite-heart" data-shop-id="{{ $shop->id }}"></i>
+
             </div>
           </div>
         </div>
