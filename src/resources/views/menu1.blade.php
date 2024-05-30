@@ -16,9 +16,10 @@
   <a href="/">
     <div class="home">Home</div>
   </a>
-  <a href="/menu2">
-    <div class="logout">Logout</div>
-  </a>
+  <form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit" class="logout">Logout</button>
+  </form>
   <a href="/my_page">
     <div class="mypage">Mypage</div>
   </a>

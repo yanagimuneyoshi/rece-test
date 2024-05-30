@@ -41,4 +41,6 @@ Route::middleware(['auth'])->group(function () {
 
     // 予約完了ページのルート
     Route::get('/done', [AllController::class, 'done'])->name('done');
+    Route::post('/logout', [AllController::class, 'logout'])->name('logout');
+
 });
