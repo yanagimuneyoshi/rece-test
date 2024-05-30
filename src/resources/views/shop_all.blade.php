@@ -119,7 +119,7 @@
 
               </div>
               <!-- <i class="far fa-heart favorite-heart" data-shop-id="{{ $shop->id }}"></i> -->
-              <i class="{{ $shop->isFavorite ? 'fas' : 'far' }} fa-heart favorite-heart" data-shop-id="{{ $shop->id }}"></i>
+              <i class="{{ $shop->is_Favorite ? 'fas' : 'far' }} fa-heart favorite-heart" data-shop-id="{{ $shop->id }}"></i>
 
             </div>
           </div>

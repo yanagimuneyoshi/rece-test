@@ -34,16 +34,16 @@ class AllController extends Controller
     $shops = $shops->with(['area', 'genre'])->get();
 
     // ログインユーザーのお気に入り情報を取得
-    $user = Auth::user();
-    $favoriteShops = [];
-    if ($user) {
-      $favoriteShops = $user->favorites->pluck('shop_id')->toArray();
-    }
+    // $user = Auth::user();
+    // $favoriteShops = [];
+    // if ($user) {
+    //   $favoriteShops = $user->favorites->pluck('shop_id')->toArray();
+    // }
 
-    // 各店舗にお気に入り情報を追加
-    foreach ($shops as $shop) {
-      $shop->isFavorite = in_array($shop->id, $favoriteShops);
-    }
+    // // 各店舗にお気に入り情報を追加
+    // foreach ($shops as $shop) {
+    //   $shop->is_Favorite = in_array($shop->id, $favoriteShops);
+    // }
 
     return view('shop_all', compact('areas', 'genres', 'shops'));
   }

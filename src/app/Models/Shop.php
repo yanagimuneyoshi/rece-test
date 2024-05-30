@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Shop extends Model
 {
@@ -16,5 +19,16 @@ class Shop extends Model
   public function genre()
   {
     return $this->belongsTo(Genre::class);
+  }
+
+  protected $appends = ['is_favorite'];
+
+  public function getIsFavoriteAttribute()
+  {
+    $user = Auth::user();
+    if ($user) {
+      return $user->favorites->pluck('shop_id')->contains($this->id);
+    }
+    return false;
   }
 }
