@@ -54,7 +54,7 @@
         <div class="row">
           @foreach ($favorites as $favorite)
           @if($favorite->shop)
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6 mb-3 favorite-card" data-shop-id="{{ $favorite->shop->id }}">
             <div class="card shadow-sm">
               <img class="card-img-top" src="path/to/image.jpg" alt="店の写真">
               <div class="card-body">
@@ -62,7 +62,6 @@
                 <p class="area">#{{ $favorite->shop->area->name }}</p>
                 <p class="genre">#{{ $favorite->shop->genre->name }}</p>
                 <button class="btn btn-primary" onclick="window.location.href='/detail/{{ $favorite->shop->id }}'">詳しく見る</button>
-                <!-- <i class="far fa-heart favorite-heart text-danger float-end" data-shop-id="{{ $favorite->shop->id }}"></i> -->
                 <i class="{{ $favorite->shop->is_favorite ? 'fas' : 'far' }} fa-heart favorite-heart text-danger float-end" data-shop-id="{{ $favorite->shop->id }}"></i>
               </div>
             </div>
@@ -93,7 +92,12 @@
               }
             }).then(response => response.json())
             .then(data => {
-              console.log(data);
+              if (data.status === 'success') {
+                const card = document.querySelector(`.favorite-card[data-shop-id="${shopId}"]`);
+                if (card) {
+                  card.remove();
+                }
+              }
             });
         });
       });
