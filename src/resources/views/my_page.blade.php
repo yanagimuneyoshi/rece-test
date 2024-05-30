@@ -62,7 +62,8 @@
                 <p class="area">#{{ $favorite->shop->area->name }}</p>
                 <p class="genre">#{{ $favorite->shop->genre->name }}</p>
                 <button class="btn btn-primary" onclick="window.location.href='/detail/{{ $favorite->shop->id }}'">詳しく見る</button>
-                <i class="far fa-heart favorite-heart text-danger float-end" data-shop-id="{{ $favorite->shop->id }}"></i>
+                <!-- <i class="far fa-heart favorite-heart text-danger float-end" data-shop-id="{{ $favorite->shop->id }}"></i> -->
+                <i class="{{ $favorite->shop->is_favorite ? 'fas' : 'far' }} fa-heart favorite-heart text-danger float-end" data-shop-id="{{ $favorite->shop->id }}"></i>
               </div>
             </div>
           </div>

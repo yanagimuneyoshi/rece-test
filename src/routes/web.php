@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/thanks', [AllController::class, 'thanks'])->name('thanks');
     Route::get('/menu1', [AllController::class, 'menu1']);
     Route::get('/menu2', [AllController::class, 'menu2']);
-    Route::post('/favorite/toggle/{shopId}', [FavoriteController::class, 'toggleFavorite']);
+    Route::post('/favorite/toggle/{shopId}', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
     Route::get('/done', [AllController::class, 'done']);
     Route::get('/detail/{shop_id}', [AllController::class, 'shop_detail'])->name('shop.detail');
     Route::get('/shop_detail', [AllController::class, 'shop_detail']);
@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
 
     // 予約完了ページのルート
     Route::get('/done', [AllController::class, 'done'])->name('done');
+
     Route::post('/logout', [AllController::class, 'logout'])->name('logout');
 
 });
