@@ -143,4 +143,17 @@ class AllController extends Controller
     $request->session()->regenerateToken();
     return redirect('/login');
   }
+
+  public function deleteReservation($id)
+  {
+    $reservation = Reserve::find($id);
+
+    if ($reservation && $reservation->user_id == Auth::id()) {
+      $reservation->delete();
+      return response()->json(['status' => 'success']);
+    }
+
+    return response()->json(['status' => 'error'], 403);
+  }
+
 }
