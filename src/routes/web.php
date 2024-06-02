@@ -44,4 +44,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/logout', [AllController::class, 'logout'])->name('logout');
 
+    Route::delete('/delete-reservation/{id}', [AllController::class, 'deleteReservation'])->name('reservation.delete');
+
+
 });

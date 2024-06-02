@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/my_page.css">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -76,6 +77,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
       const favoriteHearts = document.querySelectorAll('.favorite-heart');
       const deleteButtons = document.querySelectorAll('.delete-reservation');
 
@@ -88,7 +90,7 @@
             fetch(`/delete-reservation/${reservationId}`, {
                 method: 'DELETE',
                 headers: {
-                  'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                  'X-CSRF-TOKEN': csrfToken,
                 }
               })
               .then(response => {
@@ -115,7 +117,7 @@
           fetch(`/favorite/toggle/${shopId}`, {
               method: 'POST',
               headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'X-CSRF-TOKEN': csrfToken,
                 'Content-Type': 'application/json'
               }
             }).then(response => response.json())

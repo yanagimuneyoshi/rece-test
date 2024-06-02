@@ -144,16 +144,45 @@ class AllController extends Controller
     return redirect('/login');
   }
 
+  // public function deleteReservation($id)
+  // {
+  //   $reservation = Reserve::find($id);
+
+  //   if ($reservation && $reservation->user_id == Auth::id()) {
+  //     $reservation->delete();
+  //     return response()->json(['status' => 'success']);
+  //   }
+
+  //   return response()->json(['status' => 'error'], 403);
+  // }
+  // public function deleteReservation($id)
+  // {
+  //   $reservation = Reserve::find($id);
+
+  //   if ($reservation && $reservation->user_id == Auth::id()) {
+  //     $reservation->delete();
+  //     \Log::info("Reservation with ID {$id} deleted successfully.");
+  //     return response()->json(['status' => 'success']);
+  //   }
+
+  //   \Log::error("Failed to delete reservation with ID {$id}. User ID mismatch or reservation not found.");
+  //   return response()->json(['status' => 'error'], 403);
+  // }
   public function deleteReservation($id)
   {
-    $reservation = Reserve::find($id);
+    $reservation = Reserve::where('id', $id)
+      ->where('user_id', Auth::id())
+      ->first();
 
-    if ($reservation && $reservation->user_id == Auth::id()) {
+    if ($reservation) {
       $reservation->delete();
+      \Log::info("Reservation with ID {$id} deleted successfully.");
       return response()->json(['status' => 'success']);
     }
 
+    \Log::error("Failed to delete reservation with ID {$id}. User ID mismatch or reservation not found.");
     return response()->json(['status' => 'error'], 403);
   }
+
 
 }
