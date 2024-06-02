@@ -11,7 +11,7 @@ header {
   padding: 20px;
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -24,59 +24,40 @@ header {
 }
 
 #btn_menu8 {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 50px;
   height: 50px;
   background-color: #0000FF;
-  transition: background-color 0.3s ease;
   border: none;
-
+  position: relative;
 }
 
 #btn_menu8::before,
 #btn_menu8 span,
 #btn_menu8::after {
   content: "";
-  width: 50%;
+  width: 24px;
   height: 2px;
   background: #f7f7f7;
   position: absolute;
 }
 
 #btn_menu8::before {
-  top: 30%;
-  left: 25%;
+  top: 16px;
 }
 
 #btn_menu8 span {
-  top: 50%;
-  left: 25%;
+  top: 24px;
 }
 
 #btn_menu8::after {
-  bottom: 30%;
-  left: 25%;
+  bottom: 16px;
 }
 
 #btn_menu8:hover {
   background-color: #555;
-}
-
-#btn_menu8.active::before {
-  top: 50%;
-  transform: rotate(135deg);
-}
-
-#btn_menu8.active span {
-  opacity: 0;
-}
-
-#btn_menu8.active::after {
-  bottom: 50%;
-  transform: rotate(-135deg);
 }
 
 .container {
@@ -107,4 +88,8 @@ header {
 .favorite-heart {
   cursor: pointer;
   font-size: 24px;
+}
+
+.card-body p {
+  margin: 5px 0;
 }
