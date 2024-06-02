@@ -22,7 +22,8 @@
   <div class="container">
     <div class="left-section">
       <h2>お店名</h2>
-      <img src="path_to_image" alt="お店の写真">
+      <!-- <img src="path_to_image" alt="お店の写真"> -->
+      <img src="{{ $shop->photo }}" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="{{ $shop->name }}">
       <p class="shop_name">{{ $shop['name'] }}</p>
       <p>エリア: エリア名</p>
       <p class="area">#{{ $shop->area->name }}</p>
