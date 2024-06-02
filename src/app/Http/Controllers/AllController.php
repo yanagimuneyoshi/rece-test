@@ -33,18 +33,6 @@ class AllController extends Controller
 
     $shops = $shops->with(['area', 'genre'])->get();
 
-    // ログインユーザーのお気に入り情報を取得
-    // $user = Auth::user();
-    // $favoriteShops = [];
-    // if ($user) {
-    //   $favoriteShops = $user->favorites->pluck('shop_id')->toArray();
-    // }
-
-    // // 各店舗にお気に入り情報を追加
-    // foreach ($shops as $shop) {
-    //   $shop->is_Favorite = in_array($shop->id, $favoriteShops);
-    // }
-
     return view('shop_all', compact('areas', 'genres', 'shops'));
   }
 
@@ -85,13 +73,16 @@ class AllController extends Controller
   }
 
   public function my_page()
-  {
+{
     $user = Auth::user();
-    $reservations = Reserve::where('user_id', $user->id)->with('shop')->get();
+    // $reservations = Reserve::where('user_id', $user->id)->with('shop','shop.name')->get();
     $favorites = Favorite::where('user_id', $user->id)->with('shop.area', 'shop.genre')->get();
+    $reservations = Reserve::where('user_ID', $user->id)->with('shop')->get();
+
 
     return view('my_page', compact('reservations', 'favorites'));
-  }
+}
+
 
   public function processRegister(Request $request)
   {
@@ -101,7 +92,7 @@ class AllController extends Controller
 
     $existingUser = User::where('email', $email)->first();
     if ($existingUser) {
-      return back()->withErrors(['email' => 'メールアドレス 重複エラー']);
+      return back()->withErrors(['email' => 'メールアドレスがすでに使用されています']);
     }
 
     $user = new User();

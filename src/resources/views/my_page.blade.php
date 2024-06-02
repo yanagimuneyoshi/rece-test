@@ -24,7 +24,37 @@
     <div class="user text-center mt-5">
       <p class="userName">{{ Auth::user()->name }} さん</p>
     </div>
+    <!-- <div class="container mt-5 pt-5">
+      <div class="user text-center mt-5">
+        <p class="userName">{{ Auth::user()->name }} さん</p>
+      </div> -->
+
     <div class="contain mt-5 d-flex justify-content-between">
+      <div class="reserve card p-3">
+        <p class="title">予約状況</p>
+        @if($reservations->isEmpty())
+        <p>予約がありません。</p>
+        @else
+        @foreach ($reservations as $reservation)
+        <div class="reservation-item p-3 mb-3 shadow-sm">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <i class="fa-regular fa-clock"></i>
+            <!-- <i class="fa-regular fa-circle-xmark text-danger"></i> -->
+            <i class="fa-regular fa-circle-xmark text-danger delete-reservation" data-reservation-id="{{ $reservation->id }}"></i>
+          </div>
+          <p class="shop_name">店舗名: {{ $reservation->shop->name ?? json_decode($reservation->shop)->name }}</p>
+
+          <p class="Date">日付: {{ $reservation->date }}</p>
+          <p class="Time">時間: {{ $reservation->time }}</p>
+          <p class="Number">人数: {{ $reservation->people }}人</p>
+        </div>
+        @endforeach
+        @endif
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="contain mt-5 d-flex justify-content-between">
       <div class="reserve card p-3">
         <p class="title">予約状況</p>
         @if($reservations->isEmpty())
@@ -37,46 +67,100 @@
             <i class="fa-regular fa-clock"></i>
             <i class="fa-regular fa-circle-xmark text-danger"></i>
           </div>
-          <p class="shop_name">店舗名{{ $reservation->shop->name }}</p>
-          <p class="Date">日付{{ $reservation->date }}</p>
-          <p class="Time">時間{{ $reservation->time }}</p>
-          <p class="Number">人数{{ $reservation->people }}人</p>
+          <p class="shop_name">店舗名: {{ $reservation->shop->name }}</p>
+          <p class="Date">日付: {{ $reservation->date }}</p>
+          <p class="Time">時間: {{ $reservation->time }}</p>
+          <p class="Number">人数: {{ $reservation->people }}人</p>
         </div>
         @endif
         @endforeach
         @endif
-      </div>
-      <div class="likes">
-        <p class="title">お気に入り店舗</p>
-        @if($favorites->isEmpty())
-        <p>お気に入り店舗がありません。</p>
+      </div> -->
+
+  <!-- <div class="reserve card p-3">
+        <p class="title">予約状況</p>
+        @if($reservations->isEmpty())
+        <p>予約がありません。</p>
         @else
-        <div class="row">
-          @foreach ($favorites as $favorite)
-          @if($favorite->shop)
-          <div class="col-md-6 mb-3 favorite-card" data-shop-id="{{ $favorite->shop->id }}">
-            <div class="card shadow-sm">
-              <img class="card-img-top" src="path/to/image.jpg" alt="店の写真">
-              <div class="card-body">
-                <p class="shop_name">{{ $favorite->shop->name }}</p>
-                <p class="area">#{{ $favorite->shop->area->name }}</p>
-                <p class="genre">#{{ $favorite->shop->genre->name }}</p>
-                <button class="btn btn-primary" onclick="window.location.href='/detail/{{ $favorite->shop->id }}'">詳しく見る</button>
-                <i class="{{ $favorite->shop->is_favorite ? 'fas' : 'far' }} fa-heart favorite-heart text-danger float-end" data-shop-id="{{ $favorite->shop->id }}"></i>
-              </div>
-            </div>
+        @foreach ($reservations as $reservation)
+        @if($reservation->shop)
+        <div class="reservation-item p-3 mb-3 shadow-sm">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <i class="fa-regular fa-clock"></i>
+            <i class="fa-regular fa-circle-xmark text-danger"></i>
           </div>
-          @endif
-          @endforeach
+          <p class="shop_name">店舗名: {{ $reservation->shop->name }}</p>
+          <p class="Date">日付: {{ $reservation->date }}</p>
+          <p class="Time">時間: {{ $reservation->time }}</p>
+          <p class="Number">人数: {{ $reservation->people }}人</p>
         </div>
         @endif
+        @endforeach
+        @endif
+      </div> -->
+
+  <div class="likes">
+    <p class="title">お気に入り店舗</p>
+    @if($favorites->isEmpty())
+    <p>お気に入り店舗がありません。</p>
+    @else
+    <div class="row">
+      @foreach ($favorites as $favorite)
+      @if($favorite->shop)
+      <div class="col-md-6 mb-3 favorite-card" data-shop-id="{{ $favorite->shop->id }}">
+        <div class="card shadow-sm">
+          <img class="card-img-top" src="{{ asset($favorite->shop->photo) }}" alt="{{ $favorite->shop->name }}">
+          <div class="card-body">
+            <p class="shop_name">{{ $favorite->shop->name }}</p>
+            <p class="area">#{{ $favorite->shop->area->name }}</p>
+            <p class="genre">#{{ $favorite->shop->genre->name }}</p>
+            <button class="btn btn-primary" onclick="window.location.href='/detail/{{ $favorite->shop->id }}'">詳しく見る</button>
+            <i class="{{ $favorite->shop->is_favorite ? 'fas' : 'far' }} fa-heart favorite-heart text-danger float-end" data-shop-id="{{ $favorite->shop->id }}"></i>
+          </div>
+        </div>
       </div>
+      @endif
+      @endforeach
     </div>
+    @endif
+  </div>
+  </div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const favoriteHearts = document.querySelectorAll('.favorite-heart');
+      const deleteButtons = document.querySelectorAll('.delete-reservation');
+
+      deleteButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+          const reservationId = button.dataset.reservationId;
+          const confirmation = confirm("本当に削除しますか？");
+
+          if (confirmation) {
+            fetch(`/delete-reservation/${reservationId}`, {
+                method: 'DELETE',
+                headers: {
+                  'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                }
+              })
+              .then(response => {
+                if (response.ok) {
+                  // 削除成功時の処理（ここでは予約を表示している要素を削除）
+                  button.closest('.reservation-item').remove();
+                } else {
+                  // 削除失敗時の処理
+                  console.error('削除に失敗しました');
+                }
+              })
+              .catch(error => {
+                console.error('エラーが発生しました', error);
+              });
+          }
+        });
+      });
+
+
       favoriteHearts.forEach((heart) => {
         heart.addEventListener('click', (event) => {
           event.currentTarget.classList.toggle('fas');

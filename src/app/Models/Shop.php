@@ -31,4 +31,9 @@ class Shop extends Model
     }
     return false;
   }
+
+  public function reservations()
+  {
+    return $this->hasMany(Reserve::class, 'shop_ID', 'id');
+  }
 }
