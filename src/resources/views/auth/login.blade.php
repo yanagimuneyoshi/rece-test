@@ -11,13 +11,11 @@
 
 <body>
   <header>
-    <a href="/">
-      <div class="menu-button">
-        <button id="btn_menu8" class="btn_menu" href="#"><span>MENU</span></button>
-      </div>
-    </a>
+    <div class="menu-button">
+      <button id="btn_menu8" class="btn_menu" href="#"><span></span></button>
+    </div>
     <div class="rese">
-      <a>RESE</a>
+      <a>Rese</a>
     </div>
   </header>
 

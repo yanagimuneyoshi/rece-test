@@ -17,14 +17,22 @@
 
 <body>
   <div id="app">
-    <div data-v-56ac30e2="" id="app">
+    <div class="header-content">
+      <div class="menu-button">
+        <button id="btn_menu8" class="btn_menu" href="#"><span></span></button>
+      </div>
+      <div class="rese">
+        <a>Rese</a>
+      </div>
+    </div>
+    <!-- <div data-v-56ac30e2="" id="app">
       <div class="menu-button">
         <a href="/menu1"><button id="btn_menu8" class="btn_menu"><span>MENU</span></button></a>
       </div>
     </div>
     <div class="rese">
       <p>RESE</p>
-    </div>
+    </div> -->
     <form class="search-form" action="/search" method="post">
       @csrf
       <div data-v-56ac30e2="" class="search">

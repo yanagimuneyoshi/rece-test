@@ -18,10 +18,10 @@
 <body>
   <header>
     <div class="menu-button">
-      <a href="/menu2"><button id="btn_menu8" class="btn_menu"><span>MENU</span></button></a>
+      <button id="btn_menu8" class="btn_menu" href="#"><span></span></button>
     </div>
     <div class="rese">
-      RESE
+      <a>Rese</a>
     </div>
   </header>
 

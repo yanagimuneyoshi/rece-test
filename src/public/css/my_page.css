@@ -69,6 +69,17 @@ header {
   font-size: 30px;
 }
 
+.reserve {
+  position: fixed;
+  top: 250px;
+  left: 20px;
+  width: 500px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgb(255, 255, 255);
+}
+
 .reserve .title,
 .likes .title {
   font-size: 25px;
@@ -83,6 +94,7 @@ header {
 .reservation-item {
   border: 1px solid #e0e0e0;
   border-radius: 10px;
+  background-color: hsl(230, 90%, 51%);
 }
 
 .favorite-heart {
@@ -92,4 +104,10 @@ header {
 
 .card-body p {
   margin: 5px 0;
+}
+
+.likes {
+  flex-grow: 1;
+  margin-left: 500px;
+  /* Adjust this according to your layout */
 }

@@ -26,8 +26,8 @@
       <p class="userName">{{ Auth::user()->name }} さん</p>
     </div>
 
-    <div class="contain mt-5 d-flex justify-content-between">
-      <div class="reserve card p-3">
+    <div class="contain mt-5 d-flex">
+      <div class="reserve card p-3 me-3">
         <p class="title">予約状況</p>
         @if($reservations->isEmpty())
         <p>予約がありません。</p>
@@ -47,7 +47,7 @@
         @endif
       </div>
 
-      <div class="likes card p-3">
+      <div class="likes card p-3 flex-grow-1">
         <p class="title">お気に入り店舗</p>
         @if($favorites->isEmpty())
         <p>お気に入り店舗がありません。</p>
