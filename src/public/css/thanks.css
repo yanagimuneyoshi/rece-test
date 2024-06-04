@@ -6,113 +6,92 @@ header {
   padding: 20px;
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+  background-color: rgb(242, 242, 242);
+  /* box-shadow: 0 0px 6px rgba(0, 0, 0, 0.1); */
 }
 
 .rese {
   color: #0000FF;
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 20px;
 }
 
-
 #btn_menu8 {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
   width: 50px;
   height: 50px;
-  box-sizing: border-box;
   background-color: #0000FF;
-  transition: background-color 0.3s ease;
+  border: none;
+  position: relative;
+}
+
+#btn_menu8::before,
+#btn_menu8 span,
+#btn_menu8::after {
+  content: "";
+  width: 24px;
+  height: 2px;
+  background: #f7f7f7;
+  position: absolute;
 }
 
 #btn_menu8::before {
-  position: absolute;
-  top: 30%;
-  left: 25%;
-  display: block;
-  content: "";
-  width: 50%;
-  height: 2px;
-  background: #f7f7f7;
-  transform: rotate(0deg);
-  transition: transform 0.3s ease, top 0.1s ease;
+  top: 16px;
 }
 
 #btn_menu8 span {
-  position: absolute;
-  top: calc(50% - 1px);
-  left: 25%;
-  display: block;
-  overflow: hidden;
-  width: 60%;
-  height: 2px;
-  color: #f7f7f7;
-  opacity: 1;
-  background-color: #f7f7f7;
-  transition: opacity 0.1s ease;
+  top: 24px;
 }
 
 #btn_menu8::after {
-  position: absolute;
-  bottom: 30%;
-  left: 25%;
-  display: block;
-  content: "";
-  width: 20%;
-  height: 2px;
-  background: #f7f7f7;
-  transform: rotate(0deg);
-  transition: transform 0.3s ease, bottom 0.1s ease, width 0.3s ease;
+  bottom: 16px;
 }
 
 #btn_menu8:hover {
   background-color: #555;
 }
 
-#btn_menu8.active::before {
-  top: calc(50% - 1px);
-  transform: rotate(135deg);
-}
-
-#btn_menu8.active span {
-  opacity: 0;
-}
-
-#btn_menu8.active::after {
-  width: 50%;
-  bottom: calc(50% - 1px);
-  transform: rotate(-135deg);
-}
-
-
-
-
-.menu-button {
-  margin-right: 100px;
-}
-
-.done {
-  display: top;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  padding: 50% 25%;
-  ;
-
+  height: 100vh;
+  background-color: #f2f2f2;
 }
 
+/* コンテンツ全体のスタイル */
+.content {
+  padding: 200px;
+  position: fixed;
+  top: 60px;
+  /* ヘッダーの高さ */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  /* コンテンツが画面内に収まらない場合にスクロール可能にする */
+  scroll-behavior: smooth;
+  /* スムーズにスクロールする */
+}
+
+/* 会員登録メッセージのスタイル */
 .thanks-message {
-  margin-top: 300px;
+  margin-top: 100px;
+  /* ヘッダーの高さ分だけ下にずらす */
   font-size: 24px;
   text-align: center;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-
   padding: 20px;
-
 }
 
+/* ログインボタンのスタイル */
 .back-button {
   margin: 60px;
   background-color: #0000FF;
