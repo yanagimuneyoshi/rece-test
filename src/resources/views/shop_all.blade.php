@@ -25,14 +25,17 @@
         <a>Rese</a>
       </div>
     </div>
-    <!-- <div data-v-56ac30e2="" id="app">
-      <div class="menu-button">
-        <a href="/menu1"><button id="btn_menu8" class="btn_menu"><span>MENU</span></button></a>
-      </div>
-    </div>
-    <div class="rese">
-      <p>RESE</p>
-    </div> -->
+
+    <div id="nav-overlay" class="nav-overlay"></div>
+
+    <nav id="nav-menu" class="header__nav">
+      <ul class="nav-items">
+        <li class="nav-items__item"><a href="/">Home</a></li>
+        <li class="nav-items__item"><a href="/login">Logout</a></li>
+        <li class="nav-items__item"><a href="/my_page">Mypage</a></li>
+      </ul>
+    </nav>
+
     <form class="search-form" action="/search" method="post">
       @csrf
       <div data-v-56ac30e2="" class="search">
@@ -116,6 +119,28 @@
                 target.classList.toggle('text-danger');
               }
             });
+        });
+      });
+
+      const btnMenu = document.getElementById('btn_menu8');
+      const navMenu = document.getElementById('nav-menu');
+      const navOverlay = document.getElementById('nav-overlay');
+      const navItems = document.querySelectorAll('.nav-items__item a');
+
+      btnMenu.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        navOverlay.classList.toggle('active');
+      });
+
+      navOverlay.addEventListener('click', function() {
+        navMenu.classList.remove('active');
+        navOverlay.classList.remove('active');
+      });
+
+      navItems.forEach((item) => {
+        item.addEventListener('click', function() {
+          navMenu.classList.remove('active');
+          navOverlay.classList.remove('active');
         });
       });
     });
