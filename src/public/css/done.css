@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  /* 画面のスクロールを無効にする */
+  font-family: Arial, sans-serif;
 }
 
 header {
@@ -17,11 +17,14 @@ header {
   justify-content: flex-start;
   align-items: flex-start;
   background-color: #ffffff;
-  /* 背景色を追加して表示を確保する */
 }
 
 .rese {
   color: #0000FF;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px;
+  
 }
 
 #btn_menu8 {
@@ -34,47 +37,31 @@ header {
   height: 50px;
   box-sizing: border-box;
   background-color: #0000FF;
+  border: none;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-#btn_menu8::before {
-  position: absolute;
-  top: 30%;
-  left: 25%;
-  display: block;
+#btn_menu8::before,
+#btn_menu8 span,
+#btn_menu8::after {
   content: "";
-  width: 50%;
+  width: 24px;
   height: 2px;
   background: #f7f7f7;
-  transform: rotate(0deg);
-  transition: transform 0.3s ease, top 0.1s ease;
+  position: absolute;
+}
+
+#btn_menu8::before {
+  top: 16px;
 }
 
 #btn_menu8 span {
-  position: absolute;
-  top: calc(50% - 1px);
-  left: 25%;
-  display: block;
-  overflow: hidden;
-  width: 60%;
-  height: 2px;
-  color: #f7f7f7;
-  opacity: 1;
-  background-color: #f7f7f7;
-  transition: opacity 0.1s ease;
+  top: 24px;
 }
 
 #btn_menu8::after {
-  position: absolute;
-  bottom: 30%;
-  left: 25%;
-  display: block;
-  content: "";
-  width: 20%;
-  height: 2px;
-  background: #f7f7f7;
-  transform: rotate(0deg);
-  transition: transform 0.3s ease, bottom 0.1s ease, width 0.3s ease;
+  bottom: 16px;
 }
 
 #btn_menu8:hover {
@@ -91,13 +78,64 @@ header {
 }
 
 #btn_menu8.active::after {
-  width: 50%;
   bottom: calc(50% - 1px);
   transform: rotate(-135deg);
 }
 
-.menu-button {
-  margin-right: 100px;
+.nav-menu {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #f9f5f5;
+  color: white;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  padding-top: 60px;
+}
+
+.nav-menu.active {
+  transform: translateX(250px);
+}
+
+.nav-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-items__item {
+  margin: 15px 0;
+}
+
+.nav-items__item a {
+  color: rgb(13, 12, 12);
+  text-decoration: none;
+  font-size: 20px;
+  display: block;
+  padding: 10px 20px;
+}
+
+/* .nav-items__item a:hover {
+  background-color: #ffffff;
+} */
+
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.nav-overlay.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 .done {
@@ -125,9 +163,14 @@ header {
   color: #f7f7f7;
   border: none;
   cursor: pointer;
+  text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
 .back-button:hover {
   background-color: #555;
+}
+
+body.no-scroll {
+  overflow: hidden;
 }
