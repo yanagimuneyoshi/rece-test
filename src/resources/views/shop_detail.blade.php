@@ -11,12 +11,20 @@
 <body>
   <header>
     <div class="menu-button">
-      <button id="btn_menu8" class="btn_menu" href="#"><span></span></button>
+      <button id="btn_menu8" class="btn_menu"><span></span></button>
     </div>
     <div class="rese">
       <a>Rese</a>
     </div>
   </header>
+  <div id="nav-overlay" class="nav-overlay"></div>
+  <nav id="nav-menu" class="nav-menu">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/login">Login</a></li>
+    </ul>
+  </nav>
+
   <div class="container">
     <div class="left-section">
       <h2>お店名</h2>
@@ -88,6 +96,28 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       displaySelectedGuests();
+
+      const btnMenu = document.getElementById('btn_menu8');
+      const navMenu = document.getElementById('nav-menu');
+      const navOverlay = document.getElementById('nav-overlay');
+      const navItems = document.querySelectorAll('.nav-menu a');
+
+      btnMenu.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        navOverlay.classList.toggle('active');
+      });
+
+      navOverlay.addEventListener('click', function() {
+        navMenu.classList.remove('active');
+        navOverlay.classList.remove('active');
+      });
+
+      navItems.forEach((item) => {
+        item.addEventListener('click', function() {
+          navMenu.classList.remove('active');
+          navOverlay.classList.remove('active');
+        });
+      });
     });
   </script>
 </body>
