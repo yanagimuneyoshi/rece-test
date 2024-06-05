@@ -21,7 +21,8 @@
   <nav id="nav-menu" class="nav-menu">
     <ul>
       <li><a href="/">Home</a></li>
-      <li><a href="/login">Login</a></li>
+      <li><a href="/login">Logout</a></li>
+      <li><a href="/my_page">Mypage</a></li>
     </ul>
   </nav>
 

@@ -20,6 +20,7 @@
     <nav id="nav-menu" class="header__nav">
       <ul class="nav-items">
         <li class="nav-items__item"><a href="/">Home</a></li>
+        <li class="nav-items__item"><a href="/register">Registration</a></li>
         <li class="nav-items__item"><a href="/login">Login</a></li>
       </ul>
     </nav>

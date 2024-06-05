@@ -14,12 +14,21 @@
 <body>
   <header>
     <div class="menu-button">
-      <button id="btn_menu8" class="btn_menu" href="#"><span></span></button>
+      <button id="btn_menu8" class="btn_menu"><span></span></button>
     </div>
     <div class="rese">
       <a>Rese</a>
     </div>
   </header>
+
+  <nav id="nav-menu" class="nav-menu">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/login">Logout</a></li>
+      <li><a href="/my_page">Mypage</a></li>
+    </ul>
+  </nav>
+  <div id="nav-overlay" class="nav-overlay"></div>
 
   <div class="container mt-5 pt-5">
     <div class="user text-center mt-5">
@@ -80,6 +89,10 @@
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
       const favoriteHearts = document.querySelectorAll('.favorite-heart');
       const deleteButtons = document.querySelectorAll('.delete-reservation');
+      const btnMenu = document.getElementById('btn_menu8');
+      const navMenu = document.getElementById('nav-menu');
+      const navOverlay = document.getElementById('nav-overlay');
+      const navItems = document.querySelectorAll('.nav-menu a');
 
       deleteButtons.forEach(button => {
         button.addEventListener('click', function(event) {
@@ -129,6 +142,26 @@
                 }
               }
             });
+        });
+      });
+
+      btnMenu.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        navOverlay.classList.toggle('active');
+        document.body.classList.toggle('no-scroll');
+      });
+
+      navOverlay.addEventListener('click', function() {
+        navMenu.classList.remove('active');
+        navOverlay.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+      });
+
+      navItems.forEach((item) => {
+        item.addEventListener('click', function() {
+          navMenu.classList.remove('active');
+          navOverlay.classList.remove('active');
+          document.body.classList.remove('no-scroll');
         });
       });
     });
