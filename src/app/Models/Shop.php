@@ -1,14 +1,17 @@
 <?php
 
+// app/Models/Shop.php
+
 namespace App\Models;
 
-
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Shop extends Model
 {
+  use HasFactory;
+
   protected $fillable = ['name', 'photo', 'about', 'area_id', 'genre_id'];
 
   public function area()
@@ -34,6 +37,6 @@ class Shop extends Model
 
   public function reservations()
   {
-    return $this->hasMany(Reserve::class, 'shop_ID', 'id');
+    return $this->hasMany(Reserve::class, 'shop_id', 'id');
   }
 }

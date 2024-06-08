@@ -1,33 +1,23 @@
 <?php
 
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AllController;
 use App\Http\Controllers\FavoriteController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// 認証が不要なルート
-Route::get('/register', [AllController::class, 'register'])->name('register');
-Route::post('/register', [AllController::class, 'processRegister']);
+// 登録ページとログインページ
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/login', [AllController::class, 'login'])->name('login');
 Route::post('/login', [AllController::class, 'processLogin']);
 
-// 認証が必要なルート
-Route::middleware(['auth'])->group(function () {
+// メール認証が必要なルート
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [AllController::class, 'shop_all']);
     Route::post('/search', [AllController::class, 'shop_all']);
     Route::get('/shops', [AllController::class, 'shop_all'])->name('shops.index');
-    // Route::get('/my_page', [AllController::class, 'my_page']);
     Route::get('/my_page', [AllController::class, 'my_page'])->name('my_page');
     Route::get('/thanks', [AllController::class, 'thanks'])->name('thanks');
     Route::get('/menu1', [AllController::class, 'menu1']);
@@ -36,15 +26,32 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/done', [AllController::class, 'done']);
     Route::get('/detail/{shop_id}', [AllController::class, 'shop_detail'])->name('shop.detail');
     Route::get('/shop_detail', [AllController::class, 'shop_detail']);
-    // 予約保存のルート
     Route::post('/reserve', [AllController::class, 'storeReserve'])->name('reserve.store');
-
-    // 予約完了ページのルート
     Route::get('/done', [AllController::class, 'done'])->name('done');
-
     Route::post('/logout', [AllController::class, 'logout'])->name('logout');
-
     Route::delete('/delete-reservation/{id}', [AllController::class, 'deleteReservation'])->name('reservation.delete');
+});
 
+// メール認証
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
 
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/login'); // 認証後にログイン画面にリダイレクト
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/resend', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('resent', true);
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::get('/send-test-email', function () {
+    Mail::raw('This is a test email from Mailgun via SMTP', function ($message) {
+        $message->to('your-email@example.com')
+            ->subject('Test Email');
+    });
+
+    return 'Test email sent successfully!';
 });
