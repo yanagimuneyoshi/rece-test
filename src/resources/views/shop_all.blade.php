@@ -29,15 +29,14 @@
     <div id="nav-overlay" class="nav-overlay"></div>
 
     <nav id="nav-menu" class="header__nav">
-      <ul class="nav-items">
-        <li class="nav-items__item"><a href="/">Home</a></li>
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-          <button type="submit" class="logout">Logout</button>
-        </form>
-        <li class="nav-items__item"><a href="/login">Logout</a></li>
-        <li class="nav-items__item"><a href="/my_page">Mypage</a></li>
-      </ul>
+      <a href="/"><span class="square_btn"></span></a>
+      <a href="/" class="home">Home</a>
+      </a>
+      <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="logout">Logout</button>
+      </form>
+      <a href="/my_page" class="mypage">Mypage</a>
     </nav>
 
     <form class="search-form" action="/search" method="post">

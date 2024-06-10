@@ -20,7 +20,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: left;
-  margin-left: 10px;
+  margin-left: 30px;
   padding: 20px;
 }
 
@@ -192,7 +192,7 @@ input[data-v-56ac30e2] {
   position: fixed;
   top: 0;
   left: -100%;
-  width: 250px;
+  width: 100%;
   height: 100%;
   background-color: #fff;
   transition: left 0.4s ease;
@@ -220,9 +220,36 @@ input[data-v-56ac30e2] {
   display: block;
 }
 
+.square_btn {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: #007bff;
+  border-radius: 5px;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+}
+
+.square_btn:before,
+.square_btn:after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background-color: #ffffff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.square_btn:after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 .nav-items {
   list-style: none;
-  padding: 0;
+  padding: 40%;
   margin: 0;
 }
 
@@ -257,22 +284,76 @@ input[data-v-56ac30e2] {
   /* 要素間のスペースを設定します。必要に応じて調整してください。 */
 }
 
-.details p {
-  margin: 0;
+
+
+body {
+  overflow: hidden;
+}
+
+
+.home,
+.logout,
+.mypage {
+  top: 500px;
+  font-size: 24px;
+  color: #007bff;
+  text-align: center;
+  display: block;
+  width: 100%;
+  margin-top: 5%;
+  text-decoration: none;
+}
+
+
+button.logout {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 24px;
+  cursor: pointer;
   padding: 0;
+    width: 100%;
+    text-align: center;
 }
 
-.details .shop_name {
-  font-size: 1.2rem;
-  font-weight: bold;
+.nav-overlay.active {
+  display: block;
 }
 
-.details .area,
-.details .genre {
-  color: #555;
+.square_btn {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: #007bff;
+  border-radius: 5px;
+  position: absolute;
+  top: 50px;
+  left: 50px;
 }
 
-.details .area::before,
-.details .genre::before {
-  content: "#";
+.square_btn:before,
+.square_btn:after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background-color: #ffffff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.square_btn:after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+
+
+button.logout {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
 }
