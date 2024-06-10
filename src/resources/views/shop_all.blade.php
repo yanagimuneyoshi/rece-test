@@ -75,18 +75,17 @@
           <div class="card shadow-sm">
             <img src="{{ $shop->photo }}" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="{{ $shop->name }}">
             <div class="card-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <p class="shop_name">{{ $shop->name }}</p>
-                  <p class="area">#{{ $shop->area->name }}</p>
-                  <p class="genre">#{{ $shop->genre->name }}</p>
-                  <button class="btn btn-primary" onclick="window.location.href='/detail/{{ $shop->id }}'">詳しく見る</button>
-                </div>
+              <div class="details">
+                <p class="shop_name">{{ $shop->name }}</p>
+                <p class="area">{{ $shop->area->name }}</p>
+                <p class="genre">{{ $shop->genre->name }}</p>
+                <button class="btn btn-primary" onclick="window.location.href='/detail/{{ $shop->id }}'">詳しく見る</button>
               </div>
               <i class="{{ $shop->is_favorite ? 'fas' : 'far' }} fa-heart favorite-heart" data-shop-id="{{ $shop->id }}"></i>
             </div>
           </div>
         </div>
+
         @endforeach
       </div>
     </div>
