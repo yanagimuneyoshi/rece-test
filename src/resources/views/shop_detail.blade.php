@@ -18,16 +18,15 @@
     </div>
   </header>
   <div id="nav-overlay" class="nav-overlay"></div>
-  <nav id="nav-menu" class="nav-menu">
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/login">Logout</a></li>
-      <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit" class="logout">Logout</button>
-      </form>
-      <li><a href="/my_page">Mypage</a></li>
-    </ul>
+  <nav id="nav-menu" class="header__nav">
+    <!-- <a onclick="history.back()" class=" square_btn"></a> -->
+    <a href="{{ url('detail/' . $shop->id) }}" class="square_btn"></a>
+    <a href="/" class="home">Home</a>
+    <form method="POST" action="{{ route('logout') }}">
+      @csrf
+      <button type="submit" class="logout">Logout</button>
+    </form>
+    <a href="/my_page" class="mypage">Mypage</a>
   </nav>
 
   <div class="container">
@@ -103,7 +102,7 @@
       const btnMenu = document.getElementById('btn_menu8');
       const navMenu = document.getElementById('nav-menu');
       const navOverlay = document.getElementById('nav-overlay');
-      const navItems = document.querySelectorAll('.nav-menu a');
+      const navItems = document.querySelectorAll('.header__nav a');
 
       btnMenu.addEventListener('click', function() {
         navMenu.classList.toggle('active');
