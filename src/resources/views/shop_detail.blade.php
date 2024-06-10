@@ -22,6 +22,10 @@
     <ul>
       <li><a href="/">Home</a></li>
       <li><a href="/login">Logout</a></li>
+      <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="logout">Logout</button>
+      </form>
       <li><a href="/my_page">Mypage</a></li>
     </ul>
   </nav>
