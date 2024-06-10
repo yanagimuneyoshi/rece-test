@@ -63,7 +63,6 @@
           </select>
         </div>
         <div class="reservation-summary">
-          <h2>予約内容</h2>
           <p class="shop_name">店舗名：{{ $shop['name'] }}</p>
           <p id="selectedDate">日付: 選択された日付</p>
           <p id="selectedTime">時間: 選択された時間</p>
