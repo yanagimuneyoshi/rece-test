@@ -28,22 +28,22 @@
 
   <div class="container">
     <div class="left-section">
-      <h2>お店名</h2>
+      <div class="top-bar">
+        <button class="back-button" onclick="history.back()">＜</button>
+        <p class="shop_name">{{ $shop['name'] }}</p>
+      </div>
       <img src="{{ $shop->photo }}" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="{{ $shop->name }}">
-      <p class="shop_name">{{ $shop['name'] }}</p>
-      <p>エリア: エリア名</p>
-      <p class="area">#{{ $shop->area->name }}</p>
-      <p>ジャンル: ジャンル名</p>
-      <p class="genre">#{{ $shop->genre->name }}</p>
+      <div class="area-genre-container">
+        <p class="area">#{{ $shop['area']->name }}</p>
+        <p class="genre">#{{ $shop['genre']->name }}</p>
+      </div>
       <div class="about">
-        <h3>About</h3>
-        <p>お店の説明文など</p>
         <p>{{ $shop->about }}</p>
       </div>
     </div>
 
     <div class="right-section">
-      <h2>予約する</h2>
+      <h2>予約</h2>
       <form action="{{ route('reserve.store') }}" method="POST">
         @csrf
         <input type="hidden" name="shop_id" value="{{ $shop->id }}">
@@ -64,8 +64,7 @@
         </div>
         <div class="reservation-summary">
           <h2>予約内容</h2>
-          <p>店舗名:</p>
-          <p class="shop_name">{{ $shop['name'] }}</p>
+          <p class="shop_name">店舗名：{{ $shop['name'] }}</p>
           <p id="selectedDate">日付: 選択された日付</p>
           <p id="selectedTime">時間: 選択された時間</p>
           <p id="selectedGuests">人数: 選択された人数</p>

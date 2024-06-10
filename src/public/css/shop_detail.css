@@ -105,6 +105,7 @@ header {
   visibility: visible;
 }
 
+/* 一般的なスタイル */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -125,15 +126,43 @@ body {
 
 .left-section {
   width: 60%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
 }
 
-.left-section h2 {
+.top-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.back-button {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   font-size: 24px;
+  cursor: pointer;
+  padding: 5px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-button:hover {
+  background-color: #f0f0f0;
+}
+
+.top-bar .shop_name {
+  margin-left: 10px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .left-section img {
   width: 100%;
-  max-width: 300px;
+  max-width: 600px;
   height: auto;
 }
 
@@ -142,8 +171,20 @@ body {
   margin: 10px 0;
 }
 
+.area-genre-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.area-genre-container p {
+  font-size: 16px;
+  margin: 0;
+}
+
 .left-section .about {
   margin-top: 20px;
+  max-width: 900px;
 }
 
 .left-section .about h3 {
@@ -156,12 +197,12 @@ body {
 }
 
 .right-section {
-  width: 50%;
+  width: 40%;
   background-color: rgb(00, 115, 246);
   padding: 30px;
 }
 
-.right-section h2 {
+.right-section p {
   font-size: 24px;
 }
 
@@ -187,24 +228,30 @@ body {
 }
 
 .right-section input[type="time"] {
-  width: 40%;
-  padding: 8px;
-  margin-top: 5px;
-  font-size: 16px;
+    width: 50%;
+    padding: 8px;
+    margin-top: 5px;
+    font-size: 16px;
 }
 
 .right-section select {
-  width: 100px;
+  width: 53%;
   padding: 8px;
   margin-top: 5px;
   font-size: 16px;
 }
 
-.right-section .reservation-summary {
+.right-section  {
   margin-top: 20px;
   background-color: rgb(00, 115, 246);
   padding: 20px;
+  width: 70%;
   border-radius: 5px;
+}
+
+.reservation-summary {
+
+  background-color: rgb(94, 157, 235);
 }
 
 .right-section .reservation-summary h2 {
@@ -221,10 +268,11 @@ body {
   margin-top: 20px;
 }
 
-.right-section .submit-all button {
+.submit-all button {
   background-color: #0000FF;
   color: white;
   padding: 10px 20px;
+  width: 100%;
   font-size: 16px;
   border: none;
   cursor: pointer;
