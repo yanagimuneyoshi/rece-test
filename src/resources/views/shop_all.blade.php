@@ -77,12 +77,21 @@
             <div class="card-body">
               <div class="details">
                 <p class="shop_name">{{ $shop->name }}</p>
-                <p class="area">{{ $shop->area->name }}</p>
-                <p class="genre">{{ $shop->genre->name }}</p>
+              </div>
+              <div class="details-row">
+                <div class="details_all">
+                  <p class="area">#{{ $shop->area->name }}</p>
+                </div>
+                <div class="details_2">
+                  <p class="genre">#{{ $shop->genre->name }}</p>
+                </div>
+              </div>
+              <div class="details_3">
                 <button class="btn btn-primary" onclick="window.location.href='/detail/{{ $shop->id }}'">詳しく見る</button>
               </div>
               <i class="{{ $shop->is_favorite ? 'fas' : 'far' }} fa-heart favorite-heart" data-shop-id="{{ $shop->id }}"></i>
             </div>
+
           </div>
         </div>
 

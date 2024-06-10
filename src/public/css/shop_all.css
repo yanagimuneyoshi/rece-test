@@ -216,8 +216,6 @@ input[data-v-56ac30e2] {
   z-index: 999;
 }
 
-
-
 .nav-overlay.active {
   display: block;
 }
@@ -240,4 +238,41 @@ input[data-v-56ac30e2] {
 
 .nav-items__item a:hover {
   color: #007bff;
+}
+
+/* 追加部分 */
+.details-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  /* 要素間のスペースを設定します。必要に応じて調整してください。 */
+}
+
+.details-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  /* 要素間のスペースを設定します。必要に応じて調整してください。 */
+}
+
+.details p {
+  margin: 0;
+  padding: 0;
+}
+
+.details .shop_name {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.details .area,
+.details .genre {
+  color: #555;
+}
+
+.details .area::before,
+.details .genre::before {
+  content: "#";
 }
