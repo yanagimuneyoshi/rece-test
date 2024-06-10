@@ -21,18 +21,16 @@
     </div>
   </header>
 
-  <nav id="nav-menu" class="nav-menu">
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/login">Logout</a></li>
-      <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit" class="logout">Logout</button>
-      </form>
-      <li><a href="/my_page">Mypage</a></li>
-    </ul>
-  </nav>
   <div id="nav-overlay" class="nav-overlay"></div>
+  <nav id="nav-menu" class="header__nav">
+    <a href="/my_page" class="square_btn"></a>
+    <a href="/" class="home">Home</a>
+    <form method="POST" action="{{ route('logout') }}">
+      @csrf
+      <button type="submit" class="logout">Logout</button>
+    </form>
+    <a href="/my_page" class="mypage">Mypage</a>
+  </nav>
 
   <div class="container mt-5 pt-5">
     <div class="user text-center mt-5">
@@ -106,7 +104,7 @@
       const btnMenu = document.getElementById('btn_menu8');
       const navMenu = document.getElementById('nav-menu');
       const navOverlay = document.getElementById('nav-overlay');
-      const navItems = document.querySelectorAll('.nav-menu a');
+      const navItems = document.querySelectorAll('.header__nav a');
 
       deleteButtons.forEach(button => {
         button.addEventListener('click', function(event) {

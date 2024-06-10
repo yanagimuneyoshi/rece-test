@@ -4,10 +4,6 @@ body {
   overflow-x: hidden;
 }
 
-.no-scroll {
-  overflow: hidden;
-}
-
 header {
   position: fixed;
   top: 0;
@@ -67,46 +63,6 @@ header {
   background-color: #555;
 }
 
-.nav-menu {
-  position: fixed;
-  top: 0;
-  left: -300px;
-  width: 300px;
-  height: 100%;
-  background-color: #fdfcfc;
-  color: white;
-  padding-top: 60px;
-  transition: left 0.3s ease-in-out;
-  z-index: 1001;
-  /* Changed z-index to be above the header */
-}
-
-.nav-menu.active {
-  left: 0;
-}
-
-.nav-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-menu ul li {
-  margin: 20px 0;
-}
-
-.nav-menu ul li a {
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-  font-size: 20px;
-  padding: 10px 20px;
-  display: block;
-}
-
-/* .nav-menu ul li a:hover {
-  background-color: #faf8f8;
-} */
-
 .nav-overlay {
   position: fixed;
   top: 0;
@@ -122,6 +78,74 @@ header {
   display: block;
 }
 
+.header__nav {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  transition: left 0.4s ease;
+  z-index: 1000;
+  padding-top: 60px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+.header__nav.active {
+  left: 0;
+}
+
+.header__nav a {
+  display: block;
+  padding: 15px 25px;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 24px;
+}
+
+button.logout {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 15px 25px;
+  width: 100%;
+  text-align: center;
+}
+
+.square_btn {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: #007bff;
+  border-radius: 5px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.square_btn:before,
+.square_btn:after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background-color: #ffffff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.square_btn:after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 .container {
   margin-top: 100px;
 }
@@ -133,13 +157,16 @@ header {
 
 .reserve {
   position: fixed;
-  top: 250px;
-  left: 20px;
+  top: 240px;
+  left: 50px;
   width: 500px;
+  max-height: calc(100vh - 140px);
+  /* Adjust the height as necessary */
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: rgb(255, 255, 255);
+  overflow-y: auto;
 }
 
 .reserve .title,
@@ -150,7 +177,8 @@ header {
 }
 
 .card .card-title i {
-  margin-right: 10px;
+  margin-right: 50px;
+  
 }
 
 .reservation-item {
@@ -174,7 +202,7 @@ i {
 
 .likes {
   flex-grow: 1;
-  margin-left: 500px;
+  margin-left: 550px;
 }
 
 .text-white {
