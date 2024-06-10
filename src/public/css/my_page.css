@@ -156,7 +156,7 @@ header {
 .reservation-item {
   border: 1px solid #e0e0e0;
   border-radius: 10px;
-  background-color: hsl(230, 90%, 51%);
+  background-color: hsl(230, 91%, 68%);
 }
 
 .favorite-heart {
@@ -168,7 +168,36 @@ header {
   margin: 5px 0;
 }
 
+i {
+  color: #e5d9d9;
+}
+
 .likes {
   flex-grow: 1;
   margin-left: 500px;
+}
+
+.text-white {
+  color: white;
+}
+
+.reservation-number {
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 10px;
+  margin-top: 10px;
+  color: white;
+}
+
+.details-row {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.details-row p {
+  margin-right: 10px;
+}
+
+.ms-2 {
+  margin-left: 10px;
 }

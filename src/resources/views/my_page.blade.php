@@ -45,16 +45,20 @@
         @if($reservations->isEmpty())
         <p>予約がありません。</p>
         @else
+        @php $count = 1; @endphp
         @foreach ($reservations as $reservation)
         <div class="reservation-item p-3 mb-3 shadow-sm">
           <div class="d-flex justify-content-between align-items-center mb-2">
-            <i class="fa-regular fa-clock"></i>
+            <div class="d-flex align-items-center">
+              <i class="fa-regular fa-clock"></i>
+              <p class="reservation-number ms-2">予約{{ $count++ }}</p>
+            </div>
             <i class="fa-regular fa-circle-xmark text-danger delete-reservation" data-reservation-id="{{ $reservation->id }}"></i>
           </div>
-          <p class="shop_name">店舗名: {{ $reservation->shop->name ?? json_decode($reservation->shop)->name }}</p>
-          <p class="Date">日付: {{ $reservation->date }}</p>
-          <p class="Time">時間: {{ $reservation->time }}</p>
-          <p class="Number">人数: {{ $reservation->people }}人</p>
+          <p class="shop_name text-white">店舗名: {{ $reservation->shop->name ?? json_decode($reservation->shop)->name }}</p>
+          <p class="Date text-white">日付: {{ $reservation->date }}</p>
+          <p class="Time text-white">時間: {{ $reservation->time }}</p>
+          <p class="Number text-white">人数: {{ $reservation->people }}人</p>
         </div>
         @endforeach
         @endif
@@ -72,11 +76,17 @@
             <div class="card shadow-sm">
               <img class="card-img-top" src="{{ asset($favorite->shop->photo) }}" alt="{{ $favorite->shop->name }}">
               <div class="card-body">
-                <p class="shop_name">{{ $favorite->shop->name }}</p>
-                <p class="area">#{{ $favorite->shop->area->name }}</p>
-                <p class="genre">#{{ $favorite->shop->genre->name }}</p>
-                <button class="btn btn-primary" onclick="window.location.href='/detail/{{ $favorite->shop->id }}'">詳しく見る</button>
-                <i class="{{ $favorite->shop->is_favorite ? 'fas' : 'far' }} fa-heart favorite-heart text-danger float-end" data-shop-id="{{ $favorite->shop->id }}"></i>
+                <div class="details">
+                  <p class="shop_name">{{ $favorite->shop->name }}</p>
+                </div>
+                <div class="details-row d-flex">
+                  <p class="area">#{{ $favorite->shop->area->name }}</p>
+                  <p class="genre ms-2">#{{ $favorite->shop->genre->name }}</p>
+                </div>
+                <div class="details_3">
+                  <button class="btn btn-primary" onclick="window.location.href='/detail/{{ $favorite->shop->id }}'">詳しく見る</button>
+                  <i class="{{ $favorite->shop->is_favorite ? 'fas' : 'far' }} fa-heart favorite-heart text-danger float-end" data-shop-id="{{ $favorite->shop->id }}"></i>
+                </div>
               </div>
             </div>
           </div>
