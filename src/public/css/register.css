@@ -71,49 +71,70 @@ header {
   background-color: #555;
 }
 
-#btn_menu8.active::before {
-  top: calc(50% - 1px);
-  transform: rotate(135deg);
-}
-
-#btn_menu8.active span {
-  opacity: 0;
-}
-
-#btn_menu8.active::after {
-  bottom: calc(50% - 1px);
-  transform: rotate(-135deg);
-}
-
 .nav-menu {
   position: fixed;
   top: 0;
-  left: -250px;
-  width: 250px;
+  left: -100%;
+  width: 100%;
   height: 100%;
   background-color: #ffffff;
-  color: white;
-  transition: transform 0.3s ease;
+  color: black;
+  transition: left 0.3s ease;
   z-index: 1000;
-  padding-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .nav-menu.active {
-  transform: translateX(250px);
+  left: 0;
 }
 
-.nav-menu a {
+.nav-menu .btn_close {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+}
+
+.nav-menu .btn_close:hover {
+  color: #007bff;
+}
+
+.nav-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.nav-items__item {
+  margin: 20px 0;
+}
+
+.nav-items__item a,
+.nav-items__item button {
   color: black;
-  /* 文字色を黒に変更 */
   text-decoration: none;
   font-size: 18px;
-  padding: 1px 2px;
-  display: block;
-  padding: 20px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
 }
 
-.nav-menu a:hover {
-  background-color: #ffffff;
+.nav-items__item a:hover,
+.nav-items__item button:hover {
+  color: #007bff;
 }
 
 .nav-overlay {
@@ -133,16 +154,6 @@ header {
   opacity: 1;
   visibility: visible;
 }
-
-/* .login-form {
-  position: relative;
-  width: 400px;
-  height: 400px;
-  background-color: #fff;
-  padding: auto;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  margin: 100px auto;
-} */
 
 .login-form {
   position: fixed;
@@ -170,7 +181,6 @@ header {
   margin: auto;
   padding: 10px 10px 10px 30px;
   display: block;
-  /* color: #636363; */
   width: 300px;
   border: none;
   border-bottom: 1px solid #757575;
@@ -184,12 +194,6 @@ header {
   border: none;
   border-radius: 3px;
   cursor: pointer;
-}
-
-.login-form .login-button {
-  position: absolute;
-  bottom: 0;
-  right: 0;
 }
 
 .input-group {

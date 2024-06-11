@@ -8,7 +8,7 @@
   <title>ユーザー登録</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="{{ asset('css/register.css') }}">
-  <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
 </head>
 
 <body>
@@ -22,9 +22,16 @@
   </header>
 
   <div id="nav-menu" class="nav-menu">
-    <a href="/">Home</a>
-    <a href="{{ route('register') }}">Registration</a>
-    <a href="{{ route('login') }}">Login</a>
+    <button id="btn_close" class="btn_close"><span>&times;</span></button>
+    <ul class="nav-items">
+      <li class="nav-items__item"><a href="/">Home</a></li>
+      <li class="nav-items__item">
+        <form>
+          <a type="submit" href="/register">Registration</a>
+        </form>
+      </li>
+      <li class="nav-items__item"><a href="/login">Login</a></li>
+    </ul>
   </div>
   <div id="nav-overlay" class="nav-overlay"></div>
 
@@ -47,11 +54,6 @@
         <input type="password" name="password" placeholder="Password" required>
       </div>
 
-      <!-- <div class="input-group">
-        <i class="fa-solid fa-lock"></i>
-        <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
-      </div> -->
-
       @error('name')
       <div class="error-message">{{ $message }}</div>
       @enderror
@@ -71,14 +73,21 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const btnMenu = document.getElementById('btn_menu8');
+      const btnClose = document.getElementById('btn_close');
       const navMenu = document.getElementById('nav-menu');
       const navOverlay = document.getElementById('nav-overlay');
-      const navItems = document.querySelectorAll('.nav-menu a');
+      const navItems = document.querySelectorAll('.nav-menu a, .nav-menu button');
 
       btnMenu.addEventListener('click', function() {
         navMenu.classList.toggle('active');
         navOverlay.classList.toggle('active');
         document.body.classList.toggle('no-scroll');
+      });
+
+      btnClose.addEventListener('click', function() {
+        navMenu.classList.remove('active');
+        navOverlay.classList.remove('active');
+        document.body.classList.remove('no-scroll');
       });
 
       navOverlay.addEventListener('click', function() {
@@ -96,6 +105,7 @@
       });
     });
   </script>
+
 </body>
 
 </html>
