@@ -17,10 +17,17 @@
     <div class="rese">
       <a href="/">Rese</a>
     </div>
+    <div id="nav-overlay" class="nav-overlay"></div>
+
     <nav id="nav-menu" class="header__nav">
+      <button id="btn_close" class="btn_close" href="#"><span>&times;</span></button>
       <ul class="nav-items">
         <li class="nav-items__item"><a href="/">Home</a></li>
-        <li class="nav-items__item"><a href="/register">Registration</a></li>
+        <li class="nav-items__item">
+          <form>
+            <a type="submit" href="/register">Registration</a>
+          </form>
+        </li>
         <li class="nav-items__item"><a href="/login">Login</a></li>
       </ul>
     </nav>
@@ -46,17 +53,21 @@
     </form>
   </div>
 
-
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const btnMenu = document.getElementById('btn_menu8');
+      const btnClose = document.getElementById('btn_close');
       const navMenu = document.getElementById('nav-menu');
       const navOverlay = document.getElementById('nav-overlay');
-      const navItems = document.querySelectorAll('.nav-items__item a');
 
       btnMenu.addEventListener('click', function() {
         navMenu.classList.toggle('active');
         navOverlay.classList.toggle('active');
+      });
+
+      btnClose.addEventListener('click', function() {
+        navMenu.classList.remove('active');
+        navOverlay.classList.remove('active');
       });
 
       navOverlay.addEventListener('click', function() {
@@ -64,6 +75,7 @@
         navOverlay.classList.remove('active');
       });
 
+      const navItems = document.querySelectorAll('.nav-items__item a');
       navItems.forEach((item) => {
         item.addEventListener('click', function() {
           navMenu.classList.remove('active');
@@ -72,6 +84,7 @@
       });
     });
   </script>
+
 </body>
 
 </html>
