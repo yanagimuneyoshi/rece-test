@@ -24,7 +24,6 @@ header {
   font-size: 24px;
   font-weight: bold;
   margin: 10px;
-  
 }
 
 #btn_menu8 {
@@ -65,7 +64,7 @@ header {
 }
 
 #btn_menu8:hover {
-  background-color: #555;
+  background-color: #3740ed;
 }
 
 #btn_menu8.active::before {
@@ -85,24 +84,29 @@ header {
 .nav-menu {
   position: fixed;
   top: 0;
-  left: -250px;
-  width: 250px;
+  left: -100%;
+  width: 100%;
   height: 100%;
-  background-color: #f9f5f5;
-  color: white;
-  transition: transform 0.3s ease;
+  background-color: #ffffff;
+  color: #000;
+  transition: left 0.3s ease;
   z-index: 1000;
-  padding-top: 60px;
+  /* padding-top: 60px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-menu.active {
-  transform: translateX(250px);
+  left: 0;
 }
 
 .nav-items {
   list-style: none;
   padding: 0;
   margin: 0;
+  text-align: center;
 }
 
 .nav-items__item {
@@ -110,16 +114,12 @@ header {
 }
 
 .nav-items__item a {
-  color: rgb(13, 12, 12);
+  color: #007bff;
   text-decoration: none;
   font-size: 20px;
   display: block;
   padding: 10px 20px;
 }
-
-/* .nav-items__item a:hover {
-  background-color: #ffffff;
-} */
 
 .nav-overlay {
   position: fixed;
@@ -160,7 +160,7 @@ header {
   margin-top: 20px;
   padding: 10px 20px;
   background-color: #0000FF;
-  color: #f7f7f7;
+  color: #ffffff;
   border: none;
   cursor: pointer;
   text-decoration: none;
@@ -168,6 +168,22 @@ header {
 }
 
 .back-button:hover {
+  background-color: #555;
+}
+
+.close-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #0000FF;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.close-button:hover {
   background-color: #555;
 }
 
