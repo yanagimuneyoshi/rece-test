@@ -33,7 +33,9 @@ class AllController extends Controller
 
     $shops = $shops->with(['area', 'genre'])->get();
 
-    return view('shop_all', compact('areas', 'genres', 'shops'));
+    $isLoggedIn = Auth::check();
+
+    return view('shop_all', compact('areas', 'genres', 'shops','isLoggedIn'));
   }
 
   public function register()

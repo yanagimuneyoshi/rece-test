@@ -31,12 +31,20 @@
     <nav id="nav-menu" class="header__nav">
       <a href="/"><span class="square_btn"></span></a>
       <a href="/" class="home">Home</a>
-      </a>
+
+      <!-- ログイン状態に応じて異なるリンクを表示 -->
+      @if ($isLoggedIn)
+      <!-- ログインしているユーザー向けのコンテンツ -->
       <form method="POST" action="{{ route('logout') }}">
         @csrf
         <button type="submit" class="logout">Logout</button>
       </form>
       <a href="/my_page" class="mypage">Mypage</a>
+      @else
+      <!-- ログインしていないユーザー向けのコンテンツ -->
+      <a href="/login" class="login">Login</a>
+      <a href="/register" class="register">Register</a>
+      @endif
     </nav>
 
     <form class="search-form" action="/search" method="post">
@@ -88,12 +96,13 @@
               <div class="details_3">
                 <button class="btn btn-primary" onclick="window.location.href='/detail/{{ $shop->id }}'">詳しく見る</button>
               </div>
+              @if ($isLoggedIn)
+              <!-- ログインしているユーザー向けのコンテンツ（フェイバリットのハートアイコン） -->
               <i class="{{ $shop->is_favorite ? 'fas' : 'far' }} fa-heart favorite-heart" data-shop-id="{{ $shop->id }}"></i>
+              @endif
             </div>
-
           </div>
         </div>
-
         @endforeach
       </div>
     </div>
@@ -136,7 +145,6 @@
       const btnMenu = document.getElementById('btn_menu8');
       const navMenu = document.getElementById('nav-menu');
       const navOverlay = document.getElementById('nav-overlay');
-      const navItems = document.querySelectorAll('.nav-items__item a');
 
       btnMenu.addEventListener('click', function() {
         navMenu.classList.toggle('active');
@@ -146,13 +154,6 @@
       navOverlay.addEventListener('click', function() {
         navMenu.classList.remove('active');
         navOverlay.classList.remove('active');
-      });
-
-      navItems.forEach((item) => {
-        item.addEventListener('click', function() {
-          navMenu.classList.remove('active');
-          navOverlay.classList.remove('active');
-        });
       });
     });
   </script>
