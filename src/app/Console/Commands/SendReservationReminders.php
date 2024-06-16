@@ -20,8 +20,8 @@ class SendReservationReminders extends Command
 
     public function handle()
     {
-        $tomorrow = Carbon::tomorrow()->toDateString();
-        $reservations = Reservation::where('date', $tomorrow)->get();
+        $today = Carbon::today()->toDateString();
+        $reservations = Reservation::where('date', $today)->get();
 
         foreach ($reservations as $reservation) {
             Mail::to($reservation->user->email)->send(new ReservationReminderMail($reservation));

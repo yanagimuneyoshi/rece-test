@@ -130,10 +130,20 @@
       var form = document.getElementById('reservationForm');
       form.addEventListener('submit', function(event) {
         var selectedDate = dateInput.value;
-        if (new Date(selectedDate) < new Date(today)) {
+        var selectedTime = document.getElementById('time').value;
+
+        // エラーメッセージをクリア
+        var errorMessage = document.getElementById('error-message');
+        errorMessage.textContent = "";
+
+        // 選択された日時を取得
+        var selectedDateTime = new Date(selectedDate + 'T' + selectedTime);
+        var now = new Date();
+
+        // 過去の日時を選択している場合はエラー
+        if (selectedDateTime < now) {
           event.preventDefault();
-          var errorMessage = document.getElementById('error-message');
-          errorMessage.textContent = "過去の日付を選択することはできません。";
+          errorMessage.textContent = "過去の日時を選択することはできません。";
         }
       });
     });
