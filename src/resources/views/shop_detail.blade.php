@@ -19,7 +19,6 @@
   </header>
   <div id="nav-overlay" class="nav-overlay"></div>
   <nav id="nav-menu" class="header__nav">
-    <!-- <a onclick="history.back()" class=" square_btn"></a> -->
     <a href="{{ url('detail/' . $shop->id) }}" class="square_btn"></a>
     <a href="/" class="home">Home</a>
     <form method="POST" action="{{ route('logout') }}">
@@ -47,7 +46,7 @@
 
     <div class="right-section">
       <h2>予約</h2>
-      <form action="{{ route('reserve.store') }}" method="POST">
+      <form id="reservationForm" action="{{ route('reserve.store') }}" method="POST">
         @csrf
         <input type="hidden" name="shop_id" value="{{ $shop->id }}">
         <div class="form-group">
@@ -74,6 +73,7 @@
         <div class="submit-all">
           <button type="submit">予約する</button>
         </div>
+        <p id="error-message" style="color: red;"></p>
       </form>
     </div>
   </div>
@@ -119,6 +119,22 @@
           navMenu.classList.remove('active');
           navOverlay.classList.remove('active');
         });
+      });
+
+      // 現在の日付を取得してmin属性に設定
+      var dateInput = document.getElementById('date');
+      var today = new Date().toISOString().split('T')[0];
+      dateInput.setAttribute('min', today);
+
+      // フォームの送信時にバリデーションを行う
+      var form = document.getElementById('reservationForm');
+      form.addEventListener('submit', function(event) {
+        var selectedDate = dateInput.value;
+        if (new Date(selectedDate) < new Date(today)) {
+          event.preventDefault();
+          var errorMessage = document.getElementById('error-message');
+          errorMessage.textContent = "過去の日付を選択することはできません。";
+        }
       });
     });
   </script>
