@@ -1,6 +1,6 @@
 <?php
 
-// app/Models/Shop.php
+
 
 namespace App\Models;
 
