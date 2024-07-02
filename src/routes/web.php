@@ -4,32 +4,36 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\AllController;
+// use App\Http\Controllers\AllController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ReserveController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\FavoriteController;
 
 // 登録ページとログインページ
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
-Route::get('/login', [AllController::class, 'login'])->name('login');
-Route::post('/login', [AllController::class, 'processLogin']);
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'processLogin']);
 
 // 全ユーザーに公開するルート
-Route::get('/', [AllController::class, 'shop_all']);
-Route::post('/search', [AllController::class, 'shop_all']);
-Route::get('/shops', [AllController::class, 'shop_all'])->name('shops.index');
-Route::get('/detail/{shop_id}', [AllController::class, 'shop_detail'])->name('shop.detail');
+Route::get('/', [ShopController::class, 'shop_all']);
+Route::post('/search', [ShopController::class, 'shop_all']);
+Route::get('/shops', [ShopController::class, 'shop_all'])->name('shops.index');
+Route::get('/detail/{shop_id}', [ShopController::class, 'shop_detail'])->name('shop.detail');
 
 // メール認証が必要なルート
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/my_page', [AllController::class, 'my_page'])->name('my_page');
-    Route::get('/thanks', [AllController::class, 'thanks'])->name('thanks');
-    Route::get('/menu1', [AllController::class, 'menu1']);
-    Route::get('/menu2', [AllController::class, 'menu2']);
+    Route::get('/my_page', [PageController::class, 'my_page'])->name('my_page');
+    Route::get('/thanks', [PageController::class, 'thanks'])->name('thanks');
+    Route::get('/menu1', [PageController::class, 'menu1']);
+    Route::get('/menu2', [PageController::class, 'menu2']);
     Route::post('/favorite/toggle/{shopId}', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
-    Route::get('/done', [AllController::class, 'done'])->name('done');
-    Route::post('/reserve', [AllController::class, 'storeReserve'])->name('reserve.store');
-    Route::post('/logout', [AllController::class, 'logout'])->name('logout');
-    Route::delete('/delete-reservation/{id}', [AllController::class, 'deleteReservation'])->name('reservation.delete');
+    Route::get('/done', [PageController::class, 'done'])->name('done');
+    Route::post('/reserve', [ReserveController::class, 'storeReserve'])->name('reserve.store');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::delete('/delete-reservation/{id}', [ReserveController::class, 'deleteReservation'])->name('reservation.delete');
 });
 
 // メール認証

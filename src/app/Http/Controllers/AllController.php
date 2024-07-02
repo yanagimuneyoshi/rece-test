@@ -15,77 +15,77 @@ use App\Models\Favorite;
 
 class AllController extends Controller
 {
-  public function shop_all(Request $request)
-  {
-    $areas = Area::all();
-    $genres = Genre::all();
-    $shops = Shop::query();
+  // public function shop_all(Request $request)
+  // {
+  //   $areas = Area::all();
+  //   $genres = Genre::all();
+  //   $shops = Shop::query();
 
-    if ($request->filled('area_id')) {
-      $shops->where('area_id', $request->area_id);
-    }
+  //   if ($request->filled('area_id')) {
+  //     $shops->where('area_id', $request->area_id);
+  //   }
 
-    if ($request->filled('genre_id')) {
-      $shops->where('genre_id', $request->genre_id);
-    }
+  //   if ($request->filled('genre_id')) {
+  //     $shops->where('genre_id', $request->genre_id);
+  //   }
 
-    if ($request->filled('search')) {
-      $shops->where('name', 'like', '%' . $request->search . '%');
-    }
+  //   if ($request->filled('search')) {
+  //     $shops->where('name', 'like', '%' . $request->search . '%');
+  //   }
 
-    $shops = $shops->with(['area', 'genre'])->get();
+  //   $shops = $shops->with(['area', 'genre'])->get();
 
-    $isLoggedIn = Auth::check();
+  //   $isLoggedIn = Auth::check();
 
-    return view('shop_all', compact('areas', 'genres', 'shops','isLoggedIn'));
-  }
+  //   return view('shop_all', compact('areas', 'genres', 'shops','isLoggedIn'));
+  // }
 
-  public function register()
-  {
-    return view('auth/register');
-  }
+  // public function register()
+  // {
+  //   return view('auth/register');
+  // }
 
-  public function shop_detail($shop_id)
-  {
-    $shop = Shop::with('area', 'genre')->findOrFail($shop_id);
-    return view('shop_detail', compact('shop'));
-  }
+  // public function shop_detail($shop_id)
+  // {
+  //   $shop = Shop::with('area', 'genre')->findOrFail($shop_id);
+  //   return view('shop_detail', compact('shop'));
+  // }
 
-  public function thanks()
-  {
-    return view('thanks');
-  }
+  // public function thanks()
+  // {
+  //   return view('thanks');
+  // }
 
-  public function done()
-  {
-    return view('done');
-  }
+  // public function done()
+  // {
+  //   return view('done');
+  // }
 
-  public function menu1()
-  {
-    return view('menu1');
-  }
+  // public function menu1()
+  // {
+  //   return view('menu1');
+  // }
 
-  public function menu2()
-  {
-    return view('menu2');
-  }
+  // public function menu2()
+  // {
+  //   return view('menu2');
+  // }
 
-  public function login()
-  {
-    return view('auth/login');
-  }
+  // public function login()
+  // {
+  //   return view('auth/login');
+  // }
 
-  public function my_page()
-{
-    $user = Auth::user();
+//   public function my_page()
+// {
+//     $user = Auth::user();
 
-    $favorites = Favorite::where('user_id', $user->id)->with('shop.area', 'shop.genre')->get();
-    $reservations = Reserve::where('user_ID', $user->id)->with('shop')->get();
+//     $favorites = Favorite::where('user_id', $user->id)->with('shop.area', 'shop.genre')->get();
+//     $reservations = Reserve::where('user_ID', $user->id)->with('shop')->get();
 
 
-    return view('my_page', compact('reservations', 'favorites'));
-}
+//     return view('my_page', compact('reservations', 'favorites'));
+// }
 
 
   // public function processRegister(Request $request)
@@ -108,83 +108,83 @@ class AllController extends Controller
   //   return redirect('/thanks');
   // }
 
-  public function processRegister(RegisterUserRequest $request)
-  {
-    $user = User::create([
-      'name' => $request->username,
-      'email' => $request->email,
-      'password' => bcrypt($request->password),
-    ]);
+  // public function processRegister(RegisterUserRequest $request)
+  // {
+  //   $user = User::create([
+  //     'name' => $request->username,
+  //     'email' => $request->email,
+  //     'password' => bcrypt($request->password),
+  //   ]);
 
-    Auth::login($user);
+  //   Auth::login($user);
 
-    return redirect('/thanks');
-  }
-
-
-
-  public function processLogin(LoginUserRequest $request)
-  {
-    $email = $request->input('email');
-    $password = $request->input('password');
-
-    if (Auth::attempt(['email' => $email, 'password' => $password])) {
-      return redirect('/menu1');
-    } else {
-      return back()->withErrors(['login_error' => 'メールアドレスまたはパスワードが違います。']);
-    }
-  }
-
-
-  public function storeReserve(Request $request)
-  {
-    $request->validate([
-      'shop_id' => 'required|exists:shops,id',
-      'date' => 'required|date',
-      'time' => 'required',
-      'guests' => 'required|integer|min:1',
-    ]);
-
-    Reserve::create([
-      'shop_id' => $request->shop_id,
-      'user_id' => Auth::id(),
-      'date' => $request->date,
-      'time' => $request->time,
-      'people' => $request->guests,
-    ]);
-
-    return redirect()->route('done');
-  }
-
-  public function logout(Request $request)
-  {
-    Auth::logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    return redirect('/login');
-  }
-
-
-  public function deleteReservation($id)
-  {
-    $reservation = Reserve::where('id', $id)
-      ->where('user_id', Auth::id())
-      ->first();
-
-    if ($reservation) {
-      $reservation->delete();
-      \Log::info("Reservation with ID {$id} deleted successfully.");
-      return response()->json(['status' => 'success']);
-    }
-
-    \Log::error("Failed to delete reservation with ID {$id}. User ID mismatch or reservation not found.");
-    return response()->json(['status' => 'error'], 403);
-  }
+  //   return redirect('/thanks');
+  // }
 
 
 
+  // public function processLogin(LoginUserRequest $request)
+  // {
+  //   $email = $request->input('email');
+  //   $password = $request->input('password');
+
+  //   if (Auth::attempt(['email' => $email, 'password' => $password])) {
+  //     return redirect('/menu1');
+  //   } else {
+  //     return back()->withErrors(['login_error' => 'メールアドレスまたはパスワードが違います。']);
+  //   }
+  // }
 
 
-  
+  // public function storeReserve(Request $request)
+  // {
+  //   $request->validate([
+  //     'shop_id' => 'required|exists:shops,id',
+  //     'date' => 'required|date',
+  //     'time' => 'required',
+  //     'guests' => 'required|integer|min:1',
+  //   ]);
+
+  //   Reserve::create([
+  //     'shop_id' => $request->shop_id,
+  //     'user_id' => Auth::id(),
+  //     'date' => $request->date,
+  //     'time' => $request->time,
+  //     'people' => $request->guests,
+  //   ]);
+
+  //   return redirect()->route('done');
+  // }
+
+  // public function logout(Request $request)
+  // {
+  //   Auth::logout();
+  //   $request->session()->invalidate();
+  //   $request->session()->regenerateToken();
+  //   return redirect('/login');
+  // }
+
+
+  // public function deleteReservation($id)
+  // {
+  //   $reservation = Reserve::where('id', $id)
+  //     ->where('user_id', Auth::id())
+  //     ->first();
+
+  //   if ($reservation) {
+  //     $reservation->delete();
+  //     \Log::info("Reservation with ID {$id} deleted successfully.");
+  //     return response()->json(['status' => 'success']);
+  //   }
+
+  //   \Log::error("Failed to delete reservation with ID {$id}. User ID mismatch or reservation not found.");
+  //   return response()->json(['status' => 'error'], 403);
+  // }
+
+
+
+
+
+
 
 }
