@@ -40,13 +40,19 @@
       @csrf
       <div class="input-group">
         <i class="fa-solid fa-envelope"></i>
-        <input type="text" name="email" placeholder="Email">
+        <input type="text" name="email" placeholder="Email" value="{{ old('email') }}">
+        @if ($errors->has('email'))
+        <div class="error-message">{{ $errors->first('email') }}</div>
+        @endif
       </div>
       <div class="input-group">
         <i class="fa-solid fa-lock"></i>
         <input type="password" name="password" placeholder="Password">
+        @if ($errors->has('password'))
+        <div class="error-message">{{ $errors->first('password') }}</div>
+        @endif
       </div>
-      @if($errors->has('login_error'))
+      @if ($errors->has('login_error'))
       <div class="error-message">{{ $errors->first('login_error') }}</div>
       @endif
       <button type="submit" class="login-button">ログイン</button>

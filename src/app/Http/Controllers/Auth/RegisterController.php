@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
+use App\Http\Requests\RegisterUserRequest;
 
 class RegisterController extends Controller
 {
@@ -35,10 +36,20 @@ class RegisterController extends Controller
     ]);
   }
 
-  public function register(Request $request)
-  {
-    $this->validator($request->all())->validate();
+  // public function register(Request $request)
+  // {
+  //   $this->validator($request->all())->validate();
 
+  //   $user = $this->create($request->all());
+
+  //   event(new Registered($user));
+
+  //   Auth::login($user);
+
+  //   return redirect()->route('verification.notice');
+  // }
+  public function register(RegisterUserRequest $request)
+  {
     $user = $this->create($request->all());
 
     event(new Registered($user));

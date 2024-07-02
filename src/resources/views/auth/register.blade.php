@@ -8,7 +8,6 @@
   <title>ユーザー登録</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="{{ asset('css/register.css') }}">
-
 </head>
 
 <body>
@@ -37,7 +36,7 @@
 
   <div class="login-form">
     <h2>Registration</h2>
-    <form action="{{ route('register') }}" method="POST">
+    <form action="{{ route('register') }}" method="POST" novalidate>
       @csrf
       <div class="input-group">
         <i class="fa-solid fa-user"></i>
@@ -54,19 +53,17 @@
         <input type="password" name="password" placeholder="Password" required>
       </div>
 
+      <button type="submit" class="login-button">登録</button>
+
       @error('name')
       <div class="error-message">{{ $message }}</div>
       @enderror
-
       @error('email')
       <div class="error-message">{{ $message }}</div>
       @enderror
-
       @error('password')
       <div class="error-message">{{ $message }}</div>
       @enderror
-
-      <button type="submit" class="login-button">登録</button>
     </form>
   </div>
 

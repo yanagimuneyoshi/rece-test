@@ -172,7 +172,7 @@ header {
 
 .error-message {
   color: red;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .login-form input[type="text"],

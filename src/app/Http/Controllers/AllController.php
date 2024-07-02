@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\LoginUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,7 +79,7 @@ class AllController extends Controller
   public function my_page()
 {
     $user = Auth::user();
-    
+
     $favorites = Favorite::where('user_id', $user->id)->with('shop.area', 'shop.genre')->get();
     $reservations = Reserve::where('user_ID', $user->id)->with('shop')->get();
 
@@ -86,27 +88,42 @@ class AllController extends Controller
 }
 
 
-  public function processRegister(Request $request)
+  // public function processRegister(Request $request)
+  // {
+  //   $username = $request->input('username');
+  //   $email = $request->input('email');
+  //   $password = $request->input('password');
+
+  //   $existingUser = User::where('email', $email)->first();
+  //   if ($existingUser) {
+  //     return back()->withErrors(['email' => 'メールアドレスがすでに使用されています']);
+  //   }
+
+  //   $user = new User();
+  //   $user->name = $username;
+  //   $user->email = $email;
+  //   $user->password = bcrypt($password);
+  //   $user->save();
+
+  //   return redirect('/thanks');
+  // }
+
+  public function processRegister(RegisterUserRequest $request)
   {
-    $username = $request->input('username');
-    $email = $request->input('email');
-    $password = $request->input('password');
+    $user = User::create([
+      'name' => $request->username,
+      'email' => $request->email,
+      'password' => bcrypt($request->password),
+    ]);
 
-    $existingUser = User::where('email', $email)->first();
-    if ($existingUser) {
-      return back()->withErrors(['email' => 'メールアドレスがすでに使用されています']);
-    }
-
-    $user = new User();
-    $user->name = $username;
-    $user->email = $email;
-    $user->password = bcrypt($password);
-    $user->save();
+    Auth::login($user);
 
     return redirect('/thanks');
   }
 
-  public function processLogin(Request $request)
+
+
+  public function processLogin(LoginUserRequest $request)
   {
     $email = $request->input('email');
     $password = $request->input('password');
@@ -117,6 +134,7 @@ class AllController extends Controller
       return back()->withErrors(['login_error' => 'メールアドレスまたはパスワードが違います。']);
     }
   }
+
 
   public function storeReserve(Request $request)
   {
@@ -146,7 +164,7 @@ class AllController extends Controller
     return redirect('/login');
   }
 
-  
+
   public function deleteReservation($id)
   {
     $reservation = Reserve::where('id', $id)
@@ -163,5 +181,10 @@ class AllController extends Controller
     return response()->json(['status' => 'error'], 403);
   }
 
+
+
+
+
+  
 
 }
