@@ -77,7 +77,7 @@ class AllController extends Controller
   public function my_page()
 {
     $user = Auth::user();
-    // $reservations = Reserve::where('user_id', $user->id)->with('shop','shop.name')->get();
+    
     $favorites = Favorite::where('user_id', $user->id)->with('shop.area', 'shop.genre')->get();
     $reservations = Reserve::where('user_ID', $user->id)->with('shop')->get();
 
@@ -146,30 +146,7 @@ class AllController extends Controller
     return redirect('/login');
   }
 
-  // public function deleteReservation($id)
-  // {
-  //   $reservation = Reserve::find($id);
-
-  //   if ($reservation && $reservation->user_id == Auth::id()) {
-  //     $reservation->delete();
-  //     return response()->json(['status' => 'success']);
-  //   }
-
-  //   return response()->json(['status' => 'error'], 403);
-  // }
-  // public function deleteReservation($id)
-  // {
-  //   $reservation = Reserve::find($id);
-
-  //   if ($reservation && $reservation->user_id == Auth::id()) {
-  //     $reservation->delete();
-  //     \Log::info("Reservation with ID {$id} deleted successfully.");
-  //     return response()->json(['status' => 'success']);
-  //   }
-
-  //   \Log::error("Failed to delete reservation with ID {$id}. User ID mismatch or reservation not found.");
-  //   return response()->json(['status' => 'error'], 403);
-  // }
+  
   public function deleteReservation($id)
   {
     $reservation = Reserve::where('id', $id)
