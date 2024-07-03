@@ -55,7 +55,7 @@ class ReserveController extends Controller
     $reservation = Reserve::where('id', $reservationId)->where('user_id', Auth::id())->firstOrFail();
 
     Review::create([
-      'shop_id' => $reservation->id,
+      'shop_id' => $reservation->shop_ID,
       'user_id' => Auth::id(),
       'rating' => $request->rating,
       'comment' => $request->comment,
