@@ -55,6 +55,7 @@
             <div>
               <i class="fa-regular fa-pen-to-square text-warning edit-reservation" data-reservation-id="{{ $reservation->id }}" data-date="{{ $reservation->date }}" data-time="{{ $reservation->time }}" data-people="{{ $reservation->people }}" data-bs-toggle="modal" data-bs-target="#editReservationModal"></i>
               <i class="fa-regular fa-circle-xmark text-danger delete-reservation" data-reservation-id="{{ $reservation->id }}"></i>
+              <button class="btn btn-primary rate-reservation ms-2" data-reservation-id="{{ $reservation->id }}" data-bs-toggle="modal" data-bs-target="#rateReservationModal">評価</button>
             </div>
           </div>
           <p class="shop_name text-white">店舗名: {{ $reservation->shop->name ?? json_decode($reservation->shop)->name }}</p>
@@ -100,7 +101,7 @@
     </div>
   </div>
 
-  <!-- モーダルフォーム -->
+  <!-- 編集モーダルフォーム -->
   <div class="modal fade" id="editReservationModal" tabindex="-1" aria-labelledby="editReservationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -131,6 +132,39 @@
     </div>
   </div>
 
+  <!-- 評価モーダルフォーム -->
+  <div class="modal fade" id="rateReservationModal" tabindex="-1" aria-labelledby="rateReservationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="rateReservationModalLabel">店舗を評価</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="rateReservationForm">
+            @csrf
+            <input type="hidden" name="reservation_id" id="rate_reservation_id">
+            <div class="mb-3">
+              <label for="rating" class="form-label">評価</label>
+              <select class="form-select" id="rating" name="rating" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="comment" class="form-label">コメント</label>
+              <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">保存</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -143,6 +177,8 @@
 
       const editButtons = document.querySelectorAll('.edit-reservation');
       const editForm = document.getElementById('editReservationForm');
+      const rateButtons = document.querySelectorAll('.rate-reservation');
+      const rateForm = document.getElementById('rateReservationForm');
 
       editButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -163,6 +199,11 @@
 
         const formData = new FormData(editForm);
         const reservationId = formData.get('reservation_id');
+        const data = {
+          date: formData.get('date'),
+          time: formData.get('time'),
+          people: formData.get('people')
+        };
 
         fetch(`/update-reservation/${reservationId}`, {
             method: 'POST',
@@ -170,7 +211,7 @@
               'X-CSRF-TOKEN': csrfToken,
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(Object.fromEntries(formData))
+            body: JSON.stringify(data)
           })
           .then(response => {
             if (response.ok) {
@@ -181,6 +222,47 @@
               location.reload();
             } else {
               console.error('更新に失敗しました');
+            }
+          })
+          .catch(error => {
+            console.error('エラーが発生しました', error);
+          });
+      });
+
+      rateButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const reservationId = button.dataset.reservationId;
+          document.getElementById('rate_reservation_id').value = reservationId;
+        });
+      });
+
+      rateForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(rateForm);
+        const reservationId = formData.get('reservation_id');
+        const data = {
+          rating: formData.get('rating'),
+          comment: formData.get('comment')
+        };
+
+        fetch(`/rate-reservation/${reservationId}`, {
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': csrfToken,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+          .then(response => {
+            if (response.ok) {
+              // モーダルを閉じる
+              const modal = bootstrap.Modal.getInstance(document.getElementById('rateReservationModal'));
+              modal.hide();
+              // ページをリロードするか、評価情報を更新するコードを追加します
+              location.reload();
+            } else {
+              console.error('評価の保存に失敗しました');
             }
           })
           .catch(error => {

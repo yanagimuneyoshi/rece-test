@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reserve;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,6 +45,24 @@ class ReserveController extends Controller
     return response()->json(['status' => 'error'], 403);
   }
 
+  public function rateReservation(Request $request, $reservationId)
+  {
+    $request->validate([
+      'rating' => 'required|integer|min:1|max:5',
+      'comment' => 'nullable|string',
+    ]);
+
+    $reservation = Reserve::where('id', $reservationId)->where('user_id', Auth::id())->firstOrFail();
+
+    Review::create([
+      'shop_id' => $reservation->id,
+      'user_id' => Auth::id(),
+      'rating' => $request->rating,
+      'comment' => $request->comment,
+    ]);
+
+    return response()->json(['status' => 'success']);
+  }
 
   public function updateReservation(Request $request, $id)
   {

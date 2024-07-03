@@ -51,3 +51,4 @@ Route::post('/email/resend', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::post('/update-reservation/{id}', [ReserveController::class, 'updateReservation'])->name('reservation.update');
+Route::post('/rate-reservation/{id}', [ReserveController::class, 'rateReservation']);
