@@ -43,4 +43,28 @@ class ReserveController extends Controller
     \Log::error("Failed to delete reservation with ID {$id}. User ID mismatch or reservation not found.");
     return response()->json(['status' => 'error'], 403);
   }
+
+
+  public function updateReservation(Request $request, $id)
+  {
+    $request->validate([
+      'date' => 'required|date',
+      'time' => 'required',
+      'people' => 'required|integer|min:1',
+    ]);
+
+    $reservation = Reserve::where('id', $id)->where('user_id', Auth::id())->first();
+
+    if ($reservation) {
+      $reservation->update([
+        'date' => $request->date,
+        'time' => $request->time,
+        'people' => $request->people,
+      ]);
+
+      return response()->json(['status' => 'success']);
+    }
+
+    return response()->json(['status' => 'error'], 403);
+  }
 }

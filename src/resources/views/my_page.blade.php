@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/my_page.css">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -51,7 +52,10 @@
               <i class="fa-regular fa-clock"></i>
               <p class="reservation-number ms-2">予約{{ $count++ }}</p>
             </div>
-            <i class="fa-regular fa-circle-xmark text-danger delete-reservation" data-reservation-id="{{ $reservation->id }}"></i>
+            <div>
+              <i class="fa-regular fa-pen-to-square text-warning edit-reservation" data-reservation-id="{{ $reservation->id }}" data-date="{{ $reservation->date }}" data-time="{{ $reservation->time }}" data-people="{{ $reservation->people }}" data-bs-toggle="modal" data-bs-target="#editReservationModal"></i>
+              <i class="fa-regular fa-circle-xmark text-danger delete-reservation" data-reservation-id="{{ $reservation->id }}"></i>
+            </div>
           </div>
           <p class="shop_name text-white">店舗名: {{ $reservation->shop->name ?? json_decode($reservation->shop)->name }}</p>
           <p class="Date text-white">日付: {{ $reservation->date }}</p>
@@ -96,6 +100,37 @@
     </div>
   </div>
 
+  <!-- モーダルフォーム -->
+  <div class="modal fade" id="editReservationModal" tabindex="-1" aria-labelledby="editReservationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editReservationModalLabel">予約を編集</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editReservationForm">
+            @csrf
+            <input type="hidden" name="reservation_id" id="reservation_id">
+            <div class="mb-3">
+              <label for="edit_date" class="form-label">日付</label>
+              <input type="date" class="form-control" id="edit_date" name="date" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit_time" class="form-label">時間</label>
+              <input type="time" class="form-control" id="edit_time" name="time" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit_people" class="form-label">人数</label>
+              <input type="number" class="form-control" id="edit_people" name="people" required>
+            </div>
+            <button type="submit" class="btn btn-primary">保存</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -105,6 +140,53 @@
       const navMenu = document.getElementById('nav-menu');
       const navOverlay = document.getElementById('nav-overlay');
       const navItems = document.querySelectorAll('.header__nav a');
+
+      const editButtons = document.querySelectorAll('.edit-reservation');
+      const editForm = document.getElementById('editReservationForm');
+
+      editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const reservationId = button.dataset.reservationId;
+          const date = button.dataset.date;
+          const time = button.dataset.time;
+          const people = button.dataset.people;
+
+          document.getElementById('reservation_id').value = reservationId;
+          document.getElementById('edit_date').value = date;
+          document.getElementById('edit_time').value = time;
+          document.getElementById('edit_people').value = people;
+        });
+      });
+
+      editForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(editForm);
+        const reservationId = formData.get('reservation_id');
+
+        fetch(`/update-reservation/${reservationId}`, {
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': csrfToken,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Object.fromEntries(formData))
+          })
+          .then(response => {
+            if (response.ok) {
+              // モーダルを閉じる
+              const modal = bootstrap.Modal.getInstance(document.getElementById('editReservationModal'));
+              modal.hide();
+              // ページをリロードするか、予約情報を更新するコードを追加します
+              location.reload();
+            } else {
+              console.error('更新に失敗しました');
+            }
+          })
+          .catch(error => {
+            console.error('エラーが発生しました', error);
+          });
+      });
 
       deleteButtons.forEach(button => {
         button.addEventListener('click', function(event) {
@@ -178,6 +260,7 @@
       });
     });
   </script>
+
 </body>
 
 </html>

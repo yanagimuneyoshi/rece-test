@@ -4,7 +4,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
-// use App\Http\Controllers\AllController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ReserveController;
@@ -50,3 +49,5 @@ Route::post('/email/resend', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('resent', true);
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::post('/update-reservation/{id}', [ReserveController::class, 'updateReservation'])->name('reservation.update');
