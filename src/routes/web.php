@@ -10,6 +10,7 @@ use App\Http\Controllers\ReserveController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ImageUploadController;
+use App\Http\Controllers\StripePaymentController;
 
 
 // 登録ページとログインページ
@@ -58,3 +59,5 @@ Route::post('/rate-reservation/{id}', [ReserveController::class, 'rateReservatio
 
 Route::get('upload', [ImageUploadController::class, 'showUploadForm'])->name('upload.form');
 Route::post('upload', [ImageUploadController::class, 'uploadImage'])->name('upload.image');
+
+Route::post('/create-payment-intent', [StripePaymentController::class, 'createPaymentIntent']);

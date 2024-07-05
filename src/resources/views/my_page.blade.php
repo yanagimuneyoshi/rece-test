@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/my_page.css">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 
 <body>
@@ -56,6 +57,7 @@
               <i class="fa-regular fa-pen-to-square text-warning edit-reservation" data-reservation-id="{{ $reservation->id }}" data-date="{{ $reservation->date }}" data-time="{{ $reservation->time }}" data-people="{{ $reservation->people }}" data-bs-toggle="modal" data-bs-target="#editReservationModal"></i>
               <i class="fa-regular fa-circle-xmark text-danger delete-reservation" data-reservation-id="{{ $reservation->id }}"></i>
               <button class="btn btn-primary rate-reservation ms-2" data-reservation-id="{{ $reservation->id }}" data-bs-toggle="modal" data-bs-target="#rateReservationModal">評価</button>
+              <button class="btn btn-success pay-now ms-2" data-reservation-id="{{ $reservation->id }}" data-people="{{ $reservation->people }}" data-bs-toggle="modal" data-bs-target="#paymentModal">事前決済</button>
             </div>
           </div>
           <p class="shop_name text-white">店舗名: {{ $reservation->shop->name ?? json_decode($reservation->shop)->name }}</p>
@@ -165,6 +167,31 @@
     </div>
   </div>
 
+  <!-- 決済モーダルフォーム -->
+  <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="paymentModalLabel">事前決済</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="total-amount" class="mb-3"></div>
+          <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+          <div class="mb-3">
+            <label for="postal-code" class="form-label">郵便番号</label>
+            <input type="text" id="postal-code" class="form-control" maxlength="7" pattern="\d{7}" required>
+          </div>
+          <button id="submit" class="btn btn-primary mt-3">
+            <div class="spinner hidden" id="spinner"></div>
+            <span id="button-text">支払いを完了する</span>
+          </button>
+          <p id="payment-message" class="hidden"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -179,6 +206,7 @@
       const editForm = document.getElementById('editReservationForm');
       const rateButtons = document.querySelectorAll('.rate-reservation');
       const rateForm = document.getElementById('rateReservationForm');
+      const payButtons = document.querySelectorAll('.pay-now');
 
       editButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -317,6 +345,62 @@
                   card.remove();
                 }
               }
+            });
+        });
+      });
+
+      payButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const people = button.dataset.people;
+          const totalAmount = people * 3000;
+          document.getElementById('total-amount').textContent = `合計金額: ${totalAmount}円`;
+          fetch('/create-payment-intent', {
+              method: 'POST',
+              headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                amount: totalAmount
+              })
+            })
+            .then(response => response.json())
+            .then(data => {
+              const clientSecret = data.clientSecret;
+              const stripe = Stripe('pk_test_51PZ492BYDKsUv1YRl7SQM09noBQtTjOZfXkf33jWrhkyjYGQ0HeCCTLus3qSIxKdjppn1tt67v0nk9sQXhTOJIVX00ITWBPCaH');
+              const elements = stripe.elements();
+              const card = elements.create('card');
+              card.mount('#card-element');
+
+              document.getElementById('submit').addEventListener('click', function() {
+                const postalCode = document.getElementById('postal-code').value;
+                if (!/^\d{7}$/.test(postalCode)) {
+                  alert('郵便番号は7桁の数字で入力してください。');
+                  return;
+                }
+
+                stripe.confirmCardPayment(clientSecret, {
+                  payment_method: {
+                    card: card,
+                    billing_details: {
+                      name: '{{ Auth::user()->name }}',
+                      address: {
+                        postal_code: postalCode
+                      }
+                    },
+                  }
+                }).then(function(result) {
+                  if (result.error) {
+                    console.error(result.error.message);
+                  } else {
+                    if (result.paymentIntent.status === 'succeeded') {
+                      alert('支払いが完了しました');
+                      const modal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
+                      modal.hide();
+                    }
+                  }
+                });
+              });
             });
         });
       });
