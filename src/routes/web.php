@@ -9,6 +9,8 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ReserveController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\ImageUploadController;
+
 
 // 登録ページとログインページ
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -52,3 +54,7 @@ Route::post('/email/resend', function (Request $request) {
 
 Route::post('/update-reservation/{id}', [ReserveController::class, 'updateReservation'])->name('reservation.update');
 Route::post('/rate-reservation/{id}', [ReserveController::class, 'rateReservation']);
+
+
+Route::get('upload', [ImageUploadController::class, 'showUploadForm'])->name('upload.form');
+Route::post('upload', [ImageUploadController::class, 'uploadImage'])->name('upload.image');
