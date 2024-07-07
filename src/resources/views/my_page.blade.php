@@ -58,6 +58,7 @@
               <i class="fa-regular fa-circle-xmark text-danger delete-reservation" data-reservation-id="{{ $reservation->id }}"></i>
               <button class="btn btn-primary rate-reservation ms-2" data-reservation-id="{{ $reservation->id }}" data-bs-toggle="modal" data-bs-target="#rateReservationModal">評価</button>
               <button class="btn btn-success pay-now ms-2" data-reservation-id="{{ $reservation->id }}" data-people="{{ $reservation->people }}" data-bs-toggle="modal" data-bs-target="#paymentModal">事前決済</button>
+              <button class="btn btn-info generate-qr ms-2" data-reservation-id="{{ $reservation->id }}" data-bs-toggle="modal" data-bs-target="#qrCodeModal">QRコード生成</button>
             </div>
           </div>
           <p class="shop_name text-white">店舗名: {{ $reservation->shop->name ?? json_decode($reservation->shop)->name }}</p>
@@ -192,6 +193,21 @@
     </div>
   </div>
 
+  <!-- QRコード表示用のモーダル -->
+  <div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="qrCodeModalLabel">QRコード</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img id="qrCodeImage" src="" alt="QR Code">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -201,12 +217,14 @@
       const navMenu = document.getElementById('nav-menu');
       const navOverlay = document.getElementById('nav-overlay');
       const navItems = document.querySelectorAll('.header__nav a');
+      const generateQrButtons = document.querySelectorAll('.generate-qr');
 
       const editButtons = document.querySelectorAll('.edit-reservation');
       const editForm = document.getElementById('editReservationForm');
       const rateButtons = document.querySelectorAll('.rate-reservation');
       const rateForm = document.getElementById('rateReservationForm');
       const payButtons = document.querySelectorAll('.pay-now');
+      const qrButtons = document.querySelectorAll('.generate-qr');
 
       editButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -401,6 +419,55 @@
                   }
                 });
               });
+            });
+        });
+      });
+
+      qrButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const reservationId = button.dataset.reservationId;
+          fetch(`/generate-qr-code/${reservationId}`, {
+              method: 'GET',
+              headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Content-Type': 'application/json'
+              }
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.status === 'success') {
+                const qrCodeImage = document.createElement('img');
+                qrCodeImage.src = data.qrCodeUrl;
+                qrCodeImage.alt = 'QR Code';
+                const qrCodeContainer = document.getElementById('qr-code-container');
+                qrCodeContainer.innerHTML = ''; // Clear previous QR code
+                qrCodeContainer.appendChild(qrCodeImage);
+              } else {
+                const qrCodeMessage = document.getElementById('qr-code-message');
+                qrCodeMessage.textContent = 'QRコードの生成に失敗しました';
+                qrCodeMessage.classList.remove('hidden');
+              }
+            })
+            .catch(error => {
+              console.error('QRコードの生成に失敗しました', error);
+            });
+        });
+      });
+
+      generateQrButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const reservationId = button.dataset.reservationId;
+          fetch(`/generate-qr-code/${reservationId}`)
+            .then(response => response.json())
+            .then(data => {
+              if (data.status === 'success') {
+                document.getElementById('qrCodeImage').src = data.qrCodeUrl;
+              } else {
+                console.error('QRコードの生成に失敗しました', data.message);
+              }
+            })
+            .catch(error => {
+              console.error('QRコードの生成に失敗しました', error);
             });
         });
       });

@@ -11,6 +11,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\QRCodeController;
 
 
 // 登録ページとログインページ
@@ -61,3 +62,7 @@ Route::get('upload', [ImageUploadController::class, 'showUploadForm'])->name('up
 Route::post('upload', [ImageUploadController::class, 'uploadImage'])->name('upload.image');
 
 Route::post('/create-payment-intent', [StripePaymentController::class, 'createPaymentIntent']);
+
+
+Route::get('/generate-qr-code/{reservationId}', [QRCodeController::class, 'generate']);
+Route::post('/verify-qr-code', [QRCodeController::class, 'verifyQRCode']);
