@@ -13,6 +13,9 @@ use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\QRCodeController;
 
+use Illuminate\Support\Facades\Storage;
+
+
 
 // 登録ページとログインページ
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -66,3 +69,9 @@ Route::post('/create-payment-intent', [StripePaymentController::class, 'createPa
 
 Route::get('/generate-qr-code/{reservationId}', [QRCodeController::class, 'generate']);
 Route::post('/verify-qr-code', [QRCodeController::class, 'verifyQRCode']);
+
+Route::get('upload', function () {return view('upload');});
+Route::post('upload', function (Request $request) {
+    $path = $request->file('file')->store('uploads', 's3');
+    return 'File uploaded to S3: ' . $path;
+});
