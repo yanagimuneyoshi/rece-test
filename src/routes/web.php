@@ -1,5 +1,9 @@
 <?php
 
+// routes/web.php
+
+// routes/web.php
+
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -12,10 +16,9 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\QRCodeController;
-
-use Illuminate\Support\Facades\Storage;
-
-
+use App\Http\Controllers\Admin\StoreRepresentativeController;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\Auth\StoreRepresentativeLoginController;
 
 // 登録ページとログインページ
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -42,6 +45,34 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/delete-reservation/{id}', [ReserveController::class, 'deleteReservation'])->name('reservation.delete');
 });
 
+// 管理者専用のルート
+Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('store-representatives', [StoreRepresentativeController::class, 'index'])->name('store-representatives.index');
+    Route::get('store-representatives/create', [StoreRepresentativeController::class, 'create'])->name('store-representatives.create');
+    Route::post('store-representatives', [StoreRepresentativeController::class, 'store'])->name('store-representatives.store');
+    Route::get('store-representatives/success', [StoreRepresentativeController::class, 'success'])->name('store-representatives.success');
+});
+
+// 店舗代表者専用のルート
+// Route::middleware(['auth', 'isStoreRepresentative'])->prefix('store')->name('stores.')->group(function () {
+//     Route::get('/dashboard', [StoreController::class, 'index'])->name('dashboard');
+//     Route::get('/edit', [StoreController::class, 'edit'])->name('edit');
+//     Route::post('/update', [StoreController::class, 'update'])->name('update');
+//     Route::get('/reservations', [StoreController::class, 'reservations'])->name('reservations');
+// });
+// 店舗代表者専用のルート
+Route::middleware(['auth', 'isStoreRepresentative'])->prefix('store')->name('stores.')->group(function () {
+    Route::get('/dashboard', [StoreController::class, 'index'])->name('dashboard');
+    Route::post('/update', [StoreController::class, 'update'])->name('update');
+    Route::get('/reservations', [StoreController::class, 'reservations'])->name('reservations');
+});
+
+
+// 店舗代表者ログイン
+Route::get('store-representative/login', [StoreRepresentativeLoginController::class, 'showLoginForm'])->name('store_representative.login');
+Route::post('store-representative/login', [StoreRepresentativeLoginController::class, 'login'])->name('store_representative.login.submit');
+Route::post('store-representative/logout', [StoreRepresentativeLoginController::class, 'logout'])->name('store_representative.logout');
+
 // メール認証
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
@@ -49,29 +80,35 @@ Route::get('/email/verify', function () {
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return redirect()->route('thanks'); // 認証後にdone画面にリダイレクト
+    return redirect()->route('thanks');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-Route::post('/email/resend', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-    return back()->with('resent', true);
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+// 重複しているルートをコメントアウトまたは削除します
+// Route::post('/email/resend', function (Request $request) {
+//     $request->user()->sendEmailVerificationNotification();
+//     return back()->with('resent', true);
+// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::post('/update-reservation/{id}', [ReserveController::class, 'updateReservation'])->name('reservation.update');
 Route::post('/rate-reservation/{id}', [ReserveController::class, 'rateReservation']);
-
 
 Route::get('upload', [ImageUploadController::class, 'showUploadForm'])->name('upload.form');
 Route::post('upload', [ImageUploadController::class, 'uploadImage'])->name('upload.image');
 
 Route::post('/create-payment-intent', [StripePaymentController::class, 'createPaymentIntent']);
 
-
 Route::get('/generate-qr-code/{reservationId}', [QRCodeController::class, 'generate']);
 Route::post('/verify-qr-code', [QRCodeController::class, 'verifyQRCode']);
 
-Route::get('upload', function () {return view('upload');});
+Route::get('upload', function () {
+    return view('upload');
+});
 Route::post('upload', function (Request $request) {
     $path = $request->file('file')->store('uploads', 's3');
     return 'File uploaded to S3: ' . $path;
+});
+
+// 現在のユーザーを取得するルート（デバッグ用）
+Route::middleware(['auth'])->get('/current-user', function () {
+    return Auth::user();
 });

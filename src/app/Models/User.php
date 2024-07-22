@@ -17,6 +17,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'is_admin',
+        'is_store_representative',
     ];
 
     protected $hidden = [
@@ -26,15 +28,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_admin' => 'boolean',
+        'is_store_representative' => 'boolean',
     ];
 
 
     
-    // public function sendEmailVerificationNotification()
-    // {
-    //     $this->notify(new CustomVerifyEmail);
-    // }
-
+    
 
 
     public function favorites()
