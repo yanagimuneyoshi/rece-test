@@ -19,6 +19,7 @@ use App\Http\Controllers\QRCodeController;
 use App\Http\Controllers\Admin\StoreRepresentativeController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\Auth\StoreRepresentativeLoginController;
+use App\Http\Controllers\Admin\NotificationController;
 
 // 登録ページとログインページ
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -51,6 +52,8 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::get('store-representatives/create', [StoreRepresentativeController::class, 'create'])->name('store-representatives.create');
     Route::post('store-representatives', [StoreRepresentativeController::class, 'store'])->name('store-representatives.store');
     Route::get('store-representatives/success', [StoreRepresentativeController::class, 'success'])->name('store-representatives.success');
+    Route::get('notifications/create', [NotificationController::class, 'create'])->name('notifications.create');
+    Route::post('notifications', [NotificationController::class, 'store'])->name('notifications.store');
 });
 
 // 店舗代表者専用のルート
