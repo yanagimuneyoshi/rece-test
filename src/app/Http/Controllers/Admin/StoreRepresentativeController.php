@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Shop;
 use Illuminate\Support\Facades\Log;
 use Exception;
-use Illuminate\Validation\ValidationException;
+
 
 
 class StoreRepresentativeController extends Controller
@@ -52,7 +52,7 @@ class StoreRepresentativeController extends Controller
         $shop = Shop::find($request->shop_id);
 
         $user = new User();
-        $user->name = $shop->name; // 店舗名をユーザー名として設定
+        $user->name = $shop->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->is_store_representative = true;

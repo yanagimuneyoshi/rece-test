@@ -9,7 +9,7 @@ body {
 
 body.no-scroll {
   overflow: hidden;
-  /* メニューが表示されているときにスクロールを無効にする */
+
 }
 
 header {

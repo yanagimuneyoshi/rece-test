@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Genre extends Model
 {
-  protected $table = 'genres'; // テーブル名を指定
+  protected $table = 'genres';
 
 
 }

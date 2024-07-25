@@ -11,16 +11,15 @@ class StoreController extends Controller
 {
     public function index()
     {
-        // ログイン中のユーザーのshop_idを取得
+
         $user = Auth::user();
         $shop = Shop::find($user->shop_id);
 
-        // shopが見つからない場合の処理
+
         if (!$shop) {
             return redirect()->route('stores.dashboard')->with('error', 'Store not found.');
         }
 
-        // 店舗の予約情報を取得
         $reservations = Reservation::where('shop_id', $shop->id)->with('user')->get();
 
         return view('stores.index', compact('shop', 'reservations'));
@@ -31,7 +30,7 @@ class StoreController extends Controller
         $user = Auth::user();
         $shop = Shop::find($user->shop_id);
 
-        // shopが見つからない場合の処理
+
         if (!$shop) {
             return redirect()->route('stores.dashboard')->with('error', 'Store not found.');
         }

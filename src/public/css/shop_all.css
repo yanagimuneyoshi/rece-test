@@ -267,13 +267,13 @@ input[data-v-56ac30e2] {
   color: #007bff;
 }
 
-/* 追加部分 */
+
 .details-row {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  /* 要素間のスペースを設定します。必要に応じて調整してください。 */
+
 }
 
 .details-row {
@@ -281,14 +281,12 @@ input[data-v-56ac30e2] {
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  /* 要素間のスペースを設定します。必要に応じて調整してください。 */
+
 }
 
 
 
-/* body {
-  overflow: hidden;
-} */
+
 
 
 .home,

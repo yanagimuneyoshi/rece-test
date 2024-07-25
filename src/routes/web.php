@@ -56,13 +56,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::post('notifications', [NotificationController::class, 'store'])->name('notifications.store');
 });
 
-// 店舗代表者専用のルート
-// Route::middleware(['auth', 'isStoreRepresentative'])->prefix('store')->name('stores.')->group(function () {
-//     Route::get('/dashboard', [StoreController::class, 'index'])->name('dashboard');
-//     Route::get('/edit', [StoreController::class, 'edit'])->name('edit');
-//     Route::post('/update', [StoreController::class, 'update'])->name('update');
-//     Route::get('/reservations', [StoreController::class, 'reservations'])->name('reservations');
-// });
+
 // 店舗代表者専用のルート
 Route::middleware(['auth', 'isStoreRepresentative'])->prefix('store')->name('stores.')->group(function () {
     Route::get('/dashboard', [StoreController::class, 'index'])->name('dashboard');
@@ -86,11 +80,6 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     return redirect()->route('thanks');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-// 重複しているルートをコメントアウトまたは削除します
-// Route::post('/email/resend', function (Request $request) {
-//     $request->user()->sendEmailVerificationNotification();
-//     return back()->with('resent', true);
-// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::post('/update-reservation/{id}', [ReserveController::class, 'updateReservation'])->name('reservation.update');
 Route::post('/rate-reservation/{id}', [ReserveController::class, 'rateReservation']);

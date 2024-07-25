@@ -9,9 +9,9 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    // Fillable properties
+
     protected $fillable = [
-        'user_id',  // 追加
+        'user_id',
         'shop_id',
         'date',
         'time',

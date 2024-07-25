@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -36,18 +35,7 @@ class RegisterController extends Controller
     ]);
   }
 
-  // public function register(Request $request)
-  // {
-  //   $this->validator($request->all())->validate();
 
-  //   $user = $this->create($request->all());
-
-  //   event(new Registered($user));
-
-  //   Auth::login($user);
-
-  //   return redirect()->route('verification.notice');
-  // }
   public function register(RegisterUserRequest $request)
   {
     $user = $this->create($request->all());

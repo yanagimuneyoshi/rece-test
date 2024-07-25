@@ -161,7 +161,6 @@ button.logout {
   left: 50px;
   width: 500px;
   max-height: calc(100vh - 140px);
-  /* Adjust the height as necessary */
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -178,7 +177,7 @@ button.logout {
 
 .card .card-title i {
   margin-right: 50px;
-  
+
 }
 
 .reservation-item {
