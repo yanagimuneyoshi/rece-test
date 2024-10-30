@@ -232,6 +232,7 @@ button.logout {
   background-color: rgb(0, 115, 246);
   padding: 30px;
   border-radius: 5px;
+  margin-bottom: auto;
 }
 
 .right-section h2 {
@@ -313,4 +314,46 @@ button.logout {
 
 .submit-all button:hover {
   background-color: #3333FF;
+}
+
+.review-link {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 16px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.review-link:hover {
+  text-decoration: underline;
+}
+
+.reviews-section {
+  margin-top: 20px;
+}
+
+.review {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.review p {
+  margin: 5px 0;
+}
+
+.review-image {
+  max-width: 100px;
+  margin-top: 10px;
+}
+
+.review-actions {
+  margin-top: 10px;
+}
+
+.edit-review,
+.delete-review {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-right: 10px;
 }

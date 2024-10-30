@@ -39,4 +39,9 @@ class Shop extends Model
   {
     return $this->hasMany(Reserve::class, 'shop_id', 'id');
   }
+
+  public function reviews()
+  {
+    return $this->hasMany(Review::class);
+  }
 }

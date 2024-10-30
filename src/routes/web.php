@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\StoreRepresentativeController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\Auth\StoreRepresentativeLoginController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\ReviewController;
 
 // 登録ページとログインページ
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -44,7 +45,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/reserve', [ReserveController::class, 'storeReserve'])->name('reserve.store');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::delete('/delete-reservation/{id}', [ReserveController::class, 'deleteReservation'])->name('reservation.delete');
+
+    Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
+
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+    Route::get('/reviews/{review}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
+    Route::post('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+    Route::put('reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+
+    
 });
+
+
+
+
 
 // 管理者専用のルート
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {

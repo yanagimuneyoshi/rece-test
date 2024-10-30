@@ -40,4 +40,10 @@ class ShopController extends Controller
     $shop = Shop::with('area', 'genre')->findOrFail($shop_id);
     return view('shop_detail', compact('shop'));
   }
+
+  public function show($id)
+  {
+    $shop = Shop::with('reviews.user')->findOrFail($id); // reviewsとそれに関連するuserを一緒に取得
+    return view('shop_detail', compact('shop'));
+  }
 }
