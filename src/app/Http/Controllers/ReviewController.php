@@ -24,8 +24,6 @@ class ReviewController extends Controller
   // 口コミの保存処理
   public function store(Request $request)
   {
-
-
     $request->validate([
       'shop_id' => 'required|exists:shops,id',
       'rating' => 'required|integer|min:1|max:5',
@@ -33,10 +31,19 @@ class ReviewController extends Controller
       'image' => 'nullable|image|mimes:jpeg,png|max:2048' // 画像のバリデーション（JPEG, PNG、2MBまで）
     ]);
 
+    $shopId = $request->input('shop_id');
+    $userId = Auth::id();
+
+    // すでに同じ店舗に口コミを投稿しているかチェック
+    $existingReview = Review::where('shop_id', $shopId)->where('user_id', $userId)->first();
+    if ($existingReview) {
+      return redirect()->back()->withErrors(['message' => 'この店舗には既に口コミを投稿しています。']);
+    }
+
     // 新しいレビューインスタンスを作成
     $review = new Review([
-      'shop_id' => $request->input('shop_id'),
-      'user_id' => Auth::id(), // ログインユーザーのIDを設定
+      'shop_id' => $shopId,
+      'user_id' => $userId,
       'rating' => $request->input('rating'),
       'comment' => $request->input('comment')
     ]);
@@ -51,10 +58,10 @@ class ReviewController extends Controller
     $review->save();
 
     // データが保存されたらトップページにリダイレクト
-    return redirect('/')
-      ->with('success', '口コミが投稿されました！');
+    return redirect('/')->with('success', '口コミが投稿されました！');
   }
 
+  // 口コミ編集画面の表示
   public function edit($id)
   {
     // 口コミの情報を取得
@@ -68,10 +75,9 @@ class ReviewController extends Controller
     return view('reviews.edit', compact('review'));
   }
 
-  // ReviewController.phpのupdateメソッド
+  // 口コミの更新処理
   public function update(Request $request, $id)
   {
-    // バリデーション
     $request->validate([
       'rating' => 'required|integer|min:1|max:5',
       'comment' => 'nullable|string|max:400',
@@ -96,12 +102,11 @@ class ReviewController extends Controller
 
     $review->save();
 
-    // shop_idパラメータを渡す
     return redirect()->route('shop.detail', ['shop_id' => $review->shop_id])
       ->with('success', '口コミが更新されました！');
   }
 
-
+  // 口コミの削除処理
   public function destroy($id)
   {
     $review = Review::findOrFail($id);
@@ -111,12 +116,8 @@ class ReviewController extends Controller
       abort(403, 'Unauthorized action.');
     }
 
-    $shopId = $review->shop_id; // shop_idを取得
     $review->delete();
 
-    return redirect('/')
-      ->with('success', '口コミが削除されました！');
+    return redirect('/')->with('success', '口コミが削除されました！');
   }
-
-
 }

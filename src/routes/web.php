@@ -22,6 +22,7 @@ use App\Http\Controllers\Auth\StoreRepresentativeLoginController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\ReviewController;
 
+
 // 登録ページとログインページ
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
@@ -30,9 +31,12 @@ Route::post('/login', [AuthController::class, 'processLogin']);
 
 // 全ユーザーに公開するルート
 Route::get('/', [ShopController::class, 'shop_all']);
-Route::post('/search', [ShopController::class, 'shop_all']);
+// Route::post('/search', [ShopController::class, 'shop_all']);
 Route::get('/shops', [ShopController::class, 'shop_all'])->name('shops.index');
 Route::get('/detail/{shop_id}', [ShopController::class, 'shop_detail'])->name('shop.detail');
+
+Route::get('/search', [ShopController::class, 'shop_all'])->name('search'); // GETメソッドを許可
+Route::post('/search', [ShopController::class, 'shop_all']); // POSTメソッドも許可
 
 // メール認証が必要なルート
 Route::middleware(['auth', 'verified'])->group(function () {
