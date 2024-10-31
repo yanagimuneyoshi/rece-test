@@ -9,6 +9,15 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Notifications\CustomVerifyEmail;
 
+namespace App\Models;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use App\Notifications\CustomVerifyEmail;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -17,8 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'is_admin',
-        'is_store_representative',
+        'role', // 新しいroleカラムを追加
     ];
 
     protected $hidden = [
@@ -28,11 +36,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'is_admin' => 'boolean',
-        'is_store_representative' => 'boolean',
     ];
-
-
 
     public function favorites()
     {
@@ -41,7 +45,17 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new \App\Notifications\CustomVerifyEmail);
+        $this->notify(new CustomVerifyEmail);
+    }
+
+    // 役割に応じたアクセス制御用のメソッドを追加
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isStoreRepresentative()
+    {
+        return $this->role === 'store_representative';
     }
 }
-

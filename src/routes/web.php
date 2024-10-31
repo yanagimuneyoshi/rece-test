@@ -21,6 +21,9 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\Auth\StoreRepresentativeLoginController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\AdminRegisterController;
 
 
 // 登録ページとログインページ
@@ -59,7 +62,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
     Route::put('reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
 
-    
+
 });
 
 
@@ -67,14 +70,33 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 // 管理者専用のルート
-Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('store-representatives', [StoreRepresentativeController::class, 'index'])->name('store-representatives.index');
-    Route::get('store-representatives/create', [StoreRepresentativeController::class, 'create'])->name('store-representatives.create');
-    Route::post('store-representatives', [StoreRepresentativeController::class, 'store'])->name('store-representatives.store');
-    Route::get('store-representatives/success', [StoreRepresentativeController::class, 'success'])->name('store-representatives.success');
-    Route::get('notifications/create', [NotificationController::class, 'create'])->name('notifications.create');
-    Route::post('notifications', [NotificationController::class, 'store'])->name('notifications.store');
+// Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
+//     Route::get('store-representatives', [StoreRepresentativeController::class, 'index'])->name('store-representatives.index');
+//     Route::get('store-representatives/create', [StoreRepresentativeController::class, 'create'])->name('store-representatives.create');
+//     Route::post('store-representatives', [StoreRepresentativeController::class, 'store'])->name('store-representatives.store');
+//     Route::get('store-representatives/success', [StoreRepresentativeController::class, 'success'])->name('store-representatives.success');
+//     Route::get('notifications/create', [NotificationController::class, 'create'])->name('notifications.create');
+//     Route::post('notifications', [NotificationController::class, 'store'])->name('notifications.store');
+// });
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    Route::delete('/admin/reviews/delete-all', [AdminController::class, 'deleteAllReviews'])->name('admin.reviews.deleteAll');
+    Route::delete('/admin/reviews/{id}', [AdminController::class, 'deleteReview'])->name('admin.reviews.delete');
+    Route::post('/admin/shops/import', [AdminController::class, 'importShops'])->name('admin.shops.import');
+
 });
+
+Route::get('/admin/register', [AdminRegisterController::class, 'showRegistrationForm'])->name('admin.register');
+Route::post('/admin/register', [AdminRegisterController::class, 'register']);
+
+Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [AdminLoginController::class, 'login']);
+Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+
+
 
 
 // 店舗代表者専用のルート
