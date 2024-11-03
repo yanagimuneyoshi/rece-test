@@ -44,7 +44,7 @@
       </div>
       <a href="/reviews/create?shop_id={{ $shop->id }}" class="review-link">口コミを投稿する</a>
       <div class="reviews-section">
-        <h2>口コミ一覧</h2>
+        <h2>全ての口コミ情報</h2>
         @if($shop->reviews->isNotEmpty())
         @foreach ($shop->reviews as $review)
         <div class="review">
@@ -62,20 +62,17 @@
           @endif
           <strong>{{ $review->user->name }}</strong>
           <p class="star">評価: {{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}</p>
-          @if ($review->image_url)
           <p>{{ $review->comment }}</p>
+          @if ($review->image_url)
           <img src="{{ asset('storage/' . $review->image_path) }}" alt="口コミ画像" class="review-image">
           @endif
-
         </div>
         @endforeach
         @else
         <p>まだ口コミがありません。</p>
         @endif
       </div>
-
     </div>
-
     <div class="right-section">
       <h2>予約</h2>
       <form id="reservationForm" action="{{ route('reserve.store') }}" method="POST">
