@@ -1,8 +1,5 @@
 <?php
 
-// routes/web.php
-
-// routes/web.php
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -16,32 +13,27 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\QRCodeController;
-use App\Http\Controllers\Admin\StoreRepresentativeController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\Auth\StoreRepresentativeLoginController;
-use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AdminRegisterController;
 
 
-// 登録ページとログインページ
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'processLogin']);
 
-// 全ユーザーに公開するルート
+
 Route::get('/', [ShopController::class, 'shop_all']);
-// Route::post('/search', [ShopController::class, 'shop_all']);
 Route::get('/shops', [ShopController::class, 'shop_all'])->name('shops.index');
 Route::get('/detail/{shop_id}', [ShopController::class, 'shop_detail'])->name('shop.detail');
 
-Route::get('/search', [ShopController::class, 'shop_all'])->name('search'); // GETメソッドを許可
-Route::post('/search', [ShopController::class, 'shop_all']); // POSTメソッドも許可
+Route::get('/search', [ShopController::class, 'shop_all'])->name('search');
+Route::post('/search', [ShopController::class, 'shop_all']);
 
-// メール認証が必要なルート
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/my_page', [PageController::class, 'my_page'])->name('my_page');
     Route::get('/thanks', [PageController::class, 'thanks'])->name('thanks');
@@ -62,22 +54,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
     Route::put('reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
 
-
 });
 
-
-
-
-
-// 管理者専用のルート
-// Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
-//     Route::get('store-representatives', [StoreRepresentativeController::class, 'index'])->name('store-representatives.index');
-//     Route::get('store-representatives/create', [StoreRepresentativeController::class, 'create'])->name('store-representatives.create');
-//     Route::post('store-representatives', [StoreRepresentativeController::class, 'store'])->name('store-representatives.store');
-//     Route::get('store-representatives/success', [StoreRepresentativeController::class, 'success'])->name('store-representatives.success');
-//     Route::get('notifications/create', [NotificationController::class, 'create'])->name('notifications.create');
-//     Route::post('notifications', [NotificationController::class, 'store'])->name('notifications.store');
-// });
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
@@ -86,6 +64,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/reviews/delete-all', [AdminController::class, 'deleteAllReviews'])->name('admin.reviews.deleteAll');
     Route::delete('/admin/reviews/{id}', [AdminController::class, 'deleteReview'])->name('admin.reviews.delete');
     Route::post('/admin/shops/import', [AdminController::class, 'importShops'])->name('admin.shops.import');
+    Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 });
 
@@ -94,12 +73,9 @@ Route::post('/admin/register', [AdminRegisterController::class, 'register']);
 
 Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'login']);
-Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 
 
-
-// 店舗代表者専用のルート
 Route::middleware(['auth', 'isStoreRepresentative'])->prefix('store')->name('stores.')->group(function () {
     Route::get('/dashboard', [StoreController::class, 'index'])->name('dashboard');
     Route::post('/update', [StoreController::class, 'update'])->name('update');
@@ -107,12 +83,11 @@ Route::middleware(['auth', 'isStoreRepresentative'])->prefix('store')->name('sto
 });
 
 
-// 店舗代表者ログイン
 Route::get('store-representative/login', [StoreRepresentativeLoginController::class, 'showLoginForm'])->name('store_representative.login');
 Route::post('store-representative/login', [StoreRepresentativeLoginController::class, 'login'])->name('store_representative.login.submit');
 Route::post('store-representative/logout', [StoreRepresentativeLoginController::class, 'logout'])->name('store_representative.logout');
 
-// メール認証
+
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
@@ -142,7 +117,6 @@ Route::post('upload', function (Request $request) {
     return 'File uploaded to S3: ' . $path;
 });
 
-// 現在のユーザーを取得するルート（デバッグ用）
 Route::middleware(['auth'])->get('/current-user', function () {
     return Auth::user();
 });

@@ -48,14 +48,6 @@
         @if($shop->reviews->isNotEmpty())
         @foreach ($shop->reviews as $review)
         <div class="review">
-          <p><strong>{{ $review->user->name }}</strong> ({{ $review->created_at->format('Y-m-d') }})</p>
-          <p>評価: {{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}</p>
-          <p>{{ $review->comment }}</p>
-          @if ($review->image_url)
-          <img src="{{ asset('storage/' . $review->image_path) }}" alt="口コミ画像" class="review-image">
-          @endif
-
-          <!-- 編集・削除リンク -->
           @if(Auth::check() && (Auth::id() == $review->user_id || Auth::user()->is_admin))
           <div class="review-actions">
             @if(Auth::id() == $review->user_id)
@@ -68,6 +60,13 @@
             </form>
           </div>
           @endif
+          <strong>{{ $review->user->name }}</strong>
+          <p class="star">評価: {{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}</p>
+          @if ($review->image_url)
+          <p>{{ $review->comment }}</p>
+          <img src="{{ asset('storage/' . $review->image_path) }}" alt="口コミ画像" class="review-image">
+          @endif
+
         </div>
         @endforeach
         @else
@@ -154,26 +153,22 @@
         });
       });
 
-      // 現在の日付を取得してmin属性に設定
       var dateInput = document.getElementById('date');
       var today = new Date().toISOString().split('T')[0];
       dateInput.setAttribute('min', today);
 
-      // フォームの送信時にバリデーションを行う
       var form = document.getElementById('reservationForm');
       form.addEventListener('submit', function(event) {
         var selectedDate = dateInput.value;
         var selectedTime = document.getElementById('time').value;
 
-        // エラーメッセージをクリア
+
         var errorMessage = document.getElementById('error-message');
         errorMessage.textContent = "";
 
-        // 選択された日時を取得
         var selectedDateTime = new Date(selectedDate + 'T' + selectedTime);
         var now = new Date();
 
-        // 過去の日時を選択している場合はエラー
         if (selectedDateTime < now) {
           event.preventDefault();
           errorMessage.textContent = "過去の日時を選択することはできません。";

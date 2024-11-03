@@ -66,13 +66,13 @@
     document.getElementById('image').addEventListener('change', function(event) {
       const file = event.target.files[0];
       const errorMessage = document.getElementById('error-message');
-      errorMessage.textContent = ''; // Clear previous error message
+      errorMessage.textContent = '';
 
       if (file) {
         const validTypes = ['image/jpeg', 'image/png'];
         if (!validTypes.includes(file.type)) {
           errorMessage.textContent = '画像はJPEGまたはPNG形式のみアップロード可能です。';
-          event.target.value = ''; // Reset the file input
+          event.target.value = '';
         }
       }
     });

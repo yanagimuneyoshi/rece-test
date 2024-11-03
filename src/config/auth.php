@@ -42,9 +42,8 @@ return [
         ],
         'admin' => [
             'driver' => 'session',
-            'provider' => 'admins', // 管理者用のプロバイダー
+            'provider' => 'admins',
         ],
-    
     ],
 
     /*
@@ -72,7 +71,7 @@ return [
 
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class, // 管理者にもUserモデルを使う場合
+            'model' => App\Models\User::class,
         ],
 
         // 'users' => [

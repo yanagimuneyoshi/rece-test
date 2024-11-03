@@ -17,7 +17,6 @@ class CreateShopsTable extends Migration
       $table->unsignedBigInteger('genre_id');
       $table->string('password')->nullable();
       $table->timestamps();
-
       $table->foreign('area_id')->references('id')->on('areas');
       $table->foreign('genre_id')->references('id')->on('genres');
     });

@@ -11,7 +11,6 @@ body {
   color: #0000FF;
   padding: 20px;
 }
-/* ハンバーガーメニューの閉じるボタン */
 .close-menu {
   background-color: #007bff;
   color: #ffffff;
@@ -33,7 +32,7 @@ body {
 .nav-overlay.active {
   display: block;
 }
-/* ハンバーガーメニュー用CSS */
+
 .header-content {
   display: flex;
   align-items: center;
@@ -46,36 +45,8 @@ body {
   padding: 2%;
 }
 
-/* #btn_menu8 {
-  width: 40px;
-  height: 40px;
-  background-color: #0000FF;
-  border: none;
-  position: relative;
-}
 
-#btn_menu8::before,
-#btn_menu8 span,
-#btn_menu8::after {
-  content: "";
-  width: 10px;
-  height: 2px;
-  background: #f7f7f7;
-  position: absolute;
-}
-
-#btn_menu8::before {
-  top: 10px;
-}
-
-#btn_menu8 span {
-  top: 18px;
-}
-
-#btn_menu8::after {
-  bottom: 10px;
-} */
- #btn_menu8 {
+#btn_menu8 {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -229,7 +200,6 @@ button.logout {
 
 .favorite-heart.text-danger {
   color: #FF0000;
-  /* 赤色に変更 */
 }
 
 .vertical-divider {
@@ -276,7 +246,7 @@ button.logout {
 .stars input[type="radio"]:checked~label,
 .stars label:hover,
 .stars label:hover~label {
-  color: #FFD700;
+  color: #411fff;
 }
 
 .form-group {

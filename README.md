@@ -1,104 +1,161 @@
-
-
 # Rese
 
-ユーザー登録、ログイン、店舗の閲覧、予約機能などを提供します。
+**Rese**は、ユーザーが店舗を閲覧し、口コミを投稿・編集・削除、店舗の予約ができる機能を提供するWebアプリケーションです。また、管理者はCSVファイルをインポートして店舗情報を追加することができます。
+
+## 概要
+
+本アプリケーションでは、以下の3つの主要な機能が追加されました：
+
+1. **口コミ機能**：店舗ごとの口コミを追加、編集、削除する機能
+2. **店舗一覧ソート機能**：ユーザーが店舗をランダムや評価順で並び替え
+3. **CSVインポート機能**：管理者がCSVを使って店舗情報を一括追加
+
+**期限**：1週間
+
+---
 
 ## 環境構築
+
+### 必要環境
+
+- PHP 7.4.9
+- Laravel 8.0.26
+- Docker, Docker Compose
 
 ### Dockerビルド
 
 1. リポジトリをクローンします：
-   git clone リンク
+   ```bash
+   git clone <リポジトリURL>
 
+2. Dockerコンテナをビルドして起動します
+```bash
+   docker-compose up -d --build
 
-2.  Dockerコンテナをビルドして起動します：
-docker-compose up -d --build
-MySQLは、OSによって起動しない場合があるのでそれぞれのPCに合わせてdocker-compose.ymlファイルを編集してください。
 
 ### Laravel環境構築
 
-1.  PHPコンテナ内に入ります：
+1. **PHPコンテナに入ります**：
 
-docker-compose exec php bash
-
-2.  Composerの依存関係をインストールします：
-
-composer install
-3.  環境変数ファイルを設定します：
-
-cp .env.example .env
-4.  アプリケーションキーを生成します：
-
-php artisan key:generate
-5.  データベースをマイグレーションします：
-
-php artisan migrate
-6.  データベースをシーディングします：
-
-php artisan db:seed
-
-### 使用技術
-PHP 7.4.9
-Laravel 8.83.27
-MySQL 15.1
-URL
-開発環境： http://localhost/
-phpMyAdmin： http://localhost:8080/
-AWS: http://54.172.42.101/
-メール送信機能の設定
-Mailtrapを使用して、開発環境でのメール送信をテストします。.envファイルに以下の設定を追加します：
-管理画面からのメール送信: 管理者は管理画面から利用者にお知らせメールを送信できます。
-
-MAIL_MAILER=smtp
-MAIL_HOST=sandbox.smtp.mailtrap.io
-MAIL_PORT=2525
-MAIL_USERNAME=your_username
-MAIL_PASSWORD=your_password
-MAIL_ENCRYPTION=null
-MAIL_FROM_ADDRESS=your-email@example.com
-MAIL_FROM_NAME="${APP_NAME}"
+   ```bash
+   docker-compose exec php bash
 
 
-AWSの設定
-プロジェクトのデプロイにはAWSを使用します。以下の環境変数を.envファイルに追加します：
+2. **Composerの依存関係をインストールします：**：
+
+   ```bash
+   composer install
 
 
-AWS_ACCESS_KEY_ID=your_aws_access_key_id
-AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
-AWS_DEFAULT_REGION=us-east-1
-AWS_BUCKET=your_s3_bucket_name
-AWS_USE_PATH_STYLE_ENDPOINT=false
+3. **環境変数ファイルを設定します：**：
+
+   ```bash
+   cp .env.example .env
 
 
-機能一覧
-ユーザー登録: 新しいユーザーは登録してアカウントを作成できます。
-ユーザーログイン: 登録済みユーザーはログインしてサービスを利用できます。
-店舗の閲覧: ユーザーは店舗のリストを閲覧し、詳細情報を確認できます。
-予約機能: ユーザーは店舗の予約を行うことができます。
-評価機能: ユーザーは予約した店舗を評価することができます。
-予約情報変更機能: ユーザーは予約情報を変更することができます。
-QR決済機能: ユーザーはQRコードを使用して予約の支払いを行うことができます。
-管理者機能: 管理者は店舗代表者のアカウントを作成・管理し、通知メールを送信できます。
-通知機能: 管理者は利用者にお知らせメールを送信することができます。
-認証: メールを使用した認証が行えます。
-ストレージ: シンボリックリンクを使用した画像保存機能を提供します。
-リマインダー: タスクスケジューラを使用したリマインド機能があります。
-決済機能: Stripeの決済機能を利用して支払いができます。
-AWS: AWS(EC2, S3, RDS)の環境構築をサポートしています。
-管理画面機能
-ユーザ、店舗代表者、管理者の3権限: 管理者はユーザ、店舗代表者、管理者の3権限を管理できます。
-店舗代表者の機能: 店舗代表者は店舗情報の管理や予約情報の確認ができます。
-管理者側の機能: 管理者は全てのユーザと店舗代表者の管理、システム全体の監視ができます。
+4. **アプリケーションキーを生成します：**：
 
-特記事項
-MySQLは、OSによって起動しない場合があるので、それぞれのPCに合わせてdocker-compose.ymlファイルを編集してください。
+   ```bash
+   php artisan key:generate
+
+
+5. **データベースをマイグレーションします：**：
+
+   ```bash
+   php artisan migrate
+
+
+6. **データベースをシーディングします：**：
+
+   ```bash
+   php artisan db:seed
 
 
 
+### URL
+
+- **開発環境**： [http://localhost/](http://localhost/)
+- **phpMyAdmin**： [http://localhost:8080/](http://localhost:8080/)
 
 
+## 機能一覧
+
+### 口コミ機能
+
+#### 機能要件
+
+- **新規口コミ追加**
+  - 一般ユーザーは店舗に対し1件の口コミを追加できます（テキスト・星評価（1～5）・画像）。
+  - テキスト：400文字以内、自由記述
+  - 星評価：1～5の選択式
+  - 画像：jpeg、pngのみアップロード可能。非対応の拡張子はエラーメッセージを表示します。
+
+- **口コミ編集**
+  - ユーザーは自身が追加した口コミの内容を編集できます。前回の入力値を保持します。
+
+- **口コミ削除**
+  - 一般ユーザーは自分が追加した口コミのみ削除可能です。管理者はすべての口コミを削除できます。
+
+#### 権限別の操作
+
+| 機能           | 一般ユーザー     | 店舗ユーザー | 管理者ユーザー   |
+| -------------- | ---------------- | ------------ | ---------------- |
+| 新規口コミ追加 | ○                | ×            | ×                |
+| 口コミ編集     | ○                | ×            | ×                |
+| 口コミ削除     | ○ (自身のみ削除) | ×            | ○ (全て削除可能) |
+
+#### レスポンシブ対応
+
+- デバイスサイズ（ノートPC、スマートフォン）に合わせたレスポンシブデザインを実装。
 
 
+### 店舗一覧ソート機能
+
+#### 機能要件
+
+- 一般ユーザーが店舗一覧を以下の順で並び替え可能：
+  - **ランダム**：選択するたびに並び順が変わります。
+  - **評価が高い順・低い順**：評価が1件もない場合は、どちらの順序でも最後尾に表示されます。
+
+- ページアクセス時に毎回評価数を取得し、最新情報が反映されます。
 
 
+### CSVインポート機能
+
+#### 機能要件
+
+- **店舗情報のインポート**：管理ユーザーはCSVファイルを使って新規店舗情報を一括で追加できます。
+- **項目要件**：
+  - 店舗名：50文字以内
+  - 地域：「東京都」「大阪府」「福岡県」のいずれか
+  - ジャンル：「寿司」「焼肉」「イタリアン」「居酒屋」「ラーメン」のいずれか
+  - 店舗概要：400文字以内
+  - 画像URL：jpeg、pngのみアップロード可能。非対応の拡張子にはエラーメッセージを表示します。
+
+#### CSVファイルの記述方法
+
+CSVファイルのサンプル（ヘッダー付き）：
+
+```csv
+name,area,genre,about,photo
+リストランテ,大阪府,イタリアン,シェフ自慢のイタリアン料理を堪能できるおしゃれなレストラン。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
+炭,大阪府,焼肉,最高級の和牛を提供する焼肉の名店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
+はかた,福岡県,居酒屋,地元の旬の素材を活かした一品料理が楽しめる居酒屋。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg
+大将,大阪府,ラーメン,秘伝のスープと手作り麺の本格ラーメン店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/ramen.jpg
+パスタ工房,大阪府,イタリアン,手作りの新鮮なパスタが自慢のイタリアン店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
+焼肉本舗,東京都,焼肉,厳選された上質な和牛を提供する焼肉店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
+酒場まる,福岡県,居酒屋,アットホームな雰囲気でくつろげる居酒屋。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg
+ラーメン一筋,東京都,ラーメン,こだわりのスープともちもちの麺が特徴のラーメン屋。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/ramen.jpg
+オステリア,東京都,イタリアン,本場の味を再現したイタリアンレストラン。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
+焼肉タウン,福岡県,焼肉,地元で人気のリーズナブルな焼肉店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
+夜の酒場,大阪府,居酒屋,美味しい料理とお酒を楽しめる落ち着いた居酒屋。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg
+麺道場,福岡県,ラーメン,特製スープと手打ち麺が自慢のラーメン専門店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/ramen.jpg
+イタリアンカフェ,大阪府,イタリアン,カジュアルに楽しめる本格イタリアンカフェ。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
+和牛苑,東京都,焼肉,とろけるような和牛が楽しめる高級焼肉店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
+
+
+## 使用技術
+
+- **PHP**: 7.4.9
+- **Laravel**: 8.0.26
+- **Docker**

@@ -341,14 +341,21 @@ button.logout {
   margin: 5px 0;
 }
 
+.star {
+  color: #0000FF;
+}
+
 .review-image {
   max-width: 100px;
   margin-top: 10px;
 }
 
+
 .review-actions {
   margin-top: 10px;
+  margin-left: 30%;
 }
+
 
 .edit-review,
 .delete-review {

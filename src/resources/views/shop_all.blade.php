@@ -25,73 +25,25 @@
         <a>Rese</a>
       </div>
 
-      <!-- <div class="sort-dropdown">
-          <label for="sort-select" class="sort-label">並び替え：</label>
-          <select id="sort-select" class="sort-select">
-            <option value="random" {{ request('sort') == 'random' ? 'selected' : '' }}>ランダム</option>
-            <option value="high-rating" {{ request('sort') == 'high-rating' ? 'selected' : '' }}>評価が高い順</option>
-            <option value="low-rating" {{ request('sort') == 'low-rating' ? 'selected' : '' }}>評価が低い順</option>
-          </select>
-        </div> -->
-
-
-
-
       <div id="nav-overlay" class="nav-overlay"></div>
 
       <nav id="nav-menu" class="header__nav">
         <a href="/"><span class="square_btn"></span></a>
         <a href="/" class="home">Home</a>
 
-        <!-- ログイン状態に応じて異なるリンクを表示 -->
+
         @if ($isLoggedIn)
-        <!-- ログインしているユーザー向けのコンテンツ -->
         <form method="POST" action="{{ route('logout') }}">
           @csrf
           <button type="submit" class="logout">Logout</button>
         </form>
         <a href="/my_page" class="mypage">Mypage</a>
         @else
-        <!-- ログインしていないユーザー向けのコンテンツ -->
         <a href="/login" class="login">Login</a>
         <a href="/register" class="register">Register</a>
         @endif
       </nav>
 
-
-      <!-- <form class="search-form" action="{{ route('search') }}" method="GET">
-        <div class="sort-dropdown">
-          <label for="sort-select" class="sort-label">並び替え：</label>
-          <select id="sort-select" class="sort-select">
-            <option value="random" {{ request('sort') == 'random' ? 'selected' : '' }}>ランダム</option>
-            <option value="high-rating" {{ request('sort') == 'high-rating' ? 'selected' : '' }}>評価が高い順</option>
-            <option value="low-rating" {{ request('sort') == 'low-rating' ? 'selected' : '' }}>評価が低い順</option>
-          </select>
-        </div>
-        <div class="search">
-          <div class="area">
-            <select name="area_id">
-              <option value="" selected="selected">All area</option>
-              @foreach ($areas as $area)
-              <option value="{{ $area->id }}" {{ request('area_id') == $area->id ? 'selected' : '' }}>{{ $area->name }}</option>
-              @endforeach
-            </select>
-          </div>
-          <div class="genre">
-            <select name="genre_id">
-              <option value="" selected="selected">All genre</option>
-              @foreach ($genres as $genre)
-              <option value="{{ $genre->id }}" {{ request('genre_id') == $genre->id ? 'selected' : '' }}>{{ $genre->name }}</option>
-              @endforeach
-            </select>
-          </div>
-          <div class="research">
-            <i class="fas fa-search check"></i>
-            <input type="text" name="search" placeholder="Search…" value="{{ request('search') }}">
-            <button type="submit" class="btn btn-primary" style="display:none;">検索</button>
-          </div>
-        </div>
-      </form> -->
       <form class="search-form" action="{{ route('search') }}" method="GET">
         <div class="sort-dropdown">
           <label for="sort-select" class="sort-label">並び替え：</label>
@@ -149,7 +101,6 @@
                 <button class="btn btn-primary" onclick="window.location.href='/detail/{{ $shop->id }}'">詳しく見る</button>
               </div>
               @if ($isLoggedIn)
-              <!-- ログインしているユーザー向けのコンテンツ（フェイバリットのハートアイコン） -->
               <i class="{{ $shop->is_favorite ? 'fas' : 'far' }} fa-heart favorite-heart" data-shop-id="{{ $shop->id }}"></i>
               @endif
             </div>
@@ -209,15 +160,6 @@
       });
     });
 
-    // document.getElementById('sort-select').addEventListener('change', function() {
-    //   const sortOption = this.value;
-    //   const url = new URL(window.location.href);
-
-    //   // URLにソートパラメータを追加
-    //   url.searchParams.set('sort', sortOption);
-
-    //   // ページをリロードして並び替えを適用
-    //   window.location.href = url;
 
     document.getElementById('sort-select').addEventListener('change', function() {
       const sortOption = this.value;
@@ -225,15 +167,12 @@
       const url = new URL(form.action, window.location.origin);
       const formData = new FormData(form);
 
-      // URLに現在の検索条件を追加
       formData.forEach((value, key) => {
         url.searchParams.set(key, value);
       });
 
-      // ソートオプションを追加
       url.searchParams.set('sort', sortOption);
 
-      // 新しいURLでページ遷移
       window.location.href = url.toString();
 
     });

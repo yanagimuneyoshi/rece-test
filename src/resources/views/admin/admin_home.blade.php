@@ -1,4 +1,3 @@
-<!-- resources/views/admin/admin_home.blade.php -->
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -13,7 +12,6 @@
   <div class="dashboard-container">
     <div class="header">
       <h1>管理者ダッシュボード</h1>
-      <!-- <a href="{{ route('admin.logout') }}" class="logout-button">ログアウト</a> -->
       <form action="{{ route('admin.logout') }}" method="POST" style="display: inline;">
         @csrf
         <button type="submit" class="logout-button">ログアウト</button>
@@ -21,7 +19,6 @@
     </div>
     <p>ようこそ、管理者専用のダッシュボードです。</p>
 
-    <!-- 口コミ一覧を表示 -->
     <table>
       <thead>
         <tr>
@@ -38,7 +35,6 @@
           <td>{{ $review->shop->name ?? '不明' }}</td>
           <td>{{ $review->comment }}</td>
           <td>
-            <!-- 各コメント削除ボタン -->
             <form action="{{ route('admin.reviews.delete', $review->id) }}" method="POST" onsubmit="return confirm('この口コミを削除してもよろしいですか？');">
               @csrf
               @method('DELETE')
@@ -49,8 +45,6 @@
         @endforeach
       </tbody>
     </table>
-    <!-- 店舗情報を表示 -->
-    <!-- 店舗情報を表示 -->
     <h2>店舗情報一覧</h2>
     <table>
       <thead>
@@ -66,9 +60,9 @@
         @foreach ($shops as $shop)
         <tr>
           <td>{{ $shop->name }}</td>
-          <td>{{ $shop->area->name ?? '不明' }}</td> <!-- 地域名 -->
-          <td>{{ $shop->genre->name ?? '不明' }}</td> <!-- ジャンル名 -->
-          <td>{{ Str::limit($shop->about, 400) }}</td> <!-- 店舗概要 -->
+          <td>{{ $shop->area->name ?? '不明' }}</td>
+          <td>{{ $shop->genre->name ?? '不明' }}</td>
+          <td>{{ Str::limit($shop->about, 400) }}</td>
           <td>
             @if ($shop->photo)
             <img src="{{ $shop->photo }}" class="bd-placeholder-img card-img-top" width="100%" alt="{{ $shop->name }}">

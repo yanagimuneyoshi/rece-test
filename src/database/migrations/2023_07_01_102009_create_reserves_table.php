@@ -22,8 +22,6 @@ class CreateReservesTable extends Migration
       $table->string('people');
       $table->timestamps();
 
-      // $table->foreign('shop_ID')->references('shopID')->on('shops');
-      // $table->foreign('user_ID')->references('userID')->on('users');
     });
   }
 

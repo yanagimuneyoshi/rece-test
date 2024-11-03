@@ -22,10 +22,9 @@
     </div>
   </header>
 
-  <!-- ハンバーガーメニュー -->
   <div id="nav-overlay" class="nav-overlay"></div>
   <nav id="nav-menu" class="header__nav">
-    <button id="close-menu" class="close-menu">×</button> <!-- 閉じるボタン -->
+    <button id="close-menu" class="close-menu">×</button>
     <a href="/" class="home">Home</a>
     @if (Auth::check())
     <form method="POST" action="{{ route('logout') }}">
@@ -40,7 +39,6 @@
   </nav>
 
   <div class="main-container">
-    <!-- 左側の店舗情報とタイトル -->
     <div class="shop-info">
       <h1>今回のご利用はいかがでしたか？</h1>
       <div class="card">
@@ -49,16 +47,15 @@
           <h3 class="shop-name">{{ $shop->name }}</h3>
           <p class="area-genre">#{{ $shop->area->name }} #{{ $shop->genre->name }}</p>
           <p class="shop-description">{{ $shop->description }}</p>
-          <!-- お気に入りハートアイコン -->
           <i class="{{ $shop->is_favorite ? 'fas' : 'far' }} fa-heart favorite-heart text-danger float-end" data-shop-id="{{ $shop->id }}"></i>
         </div>
       </div>
     </div>
 
-    <!-- 縦棒を追加 -->
+
     <div class="vertical-divider"></div>
 
-    <!-- 右側の口コミ投稿フォーム -->
+
     <div class="review-form">
       <h2>体験を評価してください</h2>
       @if ($errors->any())
@@ -153,7 +150,6 @@
         navOverlay.classList.remove('active');
       });
 
-      // 文字数カウントの処理
       document.getElementById('comment').addEventListener('input', function() {
         const count = this.value.length;
         document.querySelector('.character-count').textContent = `${count}/400`;

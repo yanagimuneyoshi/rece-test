@@ -9,7 +9,6 @@ class Review extends Model
 {
   use HasFactory;
 
-  // 保存可能なフィールドを指定
   protected $fillable = [
     'shop_id',
     'user_id',

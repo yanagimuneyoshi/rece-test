@@ -19,7 +19,6 @@ class CreateFavoritesTable extends Migration
       $table->unsignedBigInteger('user_id');
       $table->timestamps();
 
-      // 外部キー制約を追加します
       $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
       $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
     });

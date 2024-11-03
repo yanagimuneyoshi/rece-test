@@ -104,7 +104,6 @@
     </div>
   </div>
 
-  <!-- 編集モーダルフォーム -->
   <div class="modal fade" id="editReservationModal" tabindex="-1" aria-labelledby="editReservationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -135,7 +134,6 @@
     </div>
   </div>
 
-  <!-- 評価モーダルフォーム -->
   <div class="modal fade" id="rateReservationModal" tabindex="-1" aria-labelledby="rateReservationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -168,7 +166,6 @@
     </div>
   </div>
 
-  <!-- 決済モーダルフォーム -->
   <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -178,7 +175,7 @@
         </div>
         <div class="modal-body">
           <div id="total-amount" class="mb-3"></div>
-          <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+          <div id="card-element"></div>
           <div class="mb-3">
             <label for="postal-code" class="form-label">郵便番号</label>
             <input type="text" id="postal-code" class="form-control" maxlength="7" pattern="\d{7}" required>
@@ -193,7 +190,6 @@
     </div>
   </div>
 
-  <!-- QRコード表示用のモーダル -->
   <div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -261,10 +257,8 @@
           })
           .then(response => {
             if (response.ok) {
-              // モーダルを閉じる
               const modal = bootstrap.Modal.getInstance(document.getElementById('editReservationModal'));
               modal.hide();
-              // ページをリロードするか、予約情報を更新するコードを追加します
               location.reload();
             } else {
               console.error('更新に失敗しました');
@@ -302,10 +296,8 @@
           })
           .then(response => {
             if (response.ok) {
-              // モーダルを閉じる
               const modal = bootstrap.Modal.getInstance(document.getElementById('rateReservationModal'));
               modal.hide();
-              // ページをリロードするか、評価情報を更新するコードを追加します
               location.reload();
             } else {
               console.error('評価の保存に失敗しました');
@@ -440,7 +432,7 @@
                 qrCodeImage.src = data.qrCodeUrl;
                 qrCodeImage.alt = 'QR Code';
                 const qrCodeContainer = document.getElementById('qr-code-container');
-                qrCodeContainer.innerHTML = ''; // Clear previous QR code
+                qrCodeContainer.innerHTML = '';
                 qrCodeContainer.appendChild(qrCodeImage);
               } else {
                 const qrCodeMessage = document.getElementById('qr-code-message');

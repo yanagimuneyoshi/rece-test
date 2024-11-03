@@ -12,7 +12,7 @@ class AddRoleColumnToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             if (!Schema::hasColumn('users', 'role')) {
-                $table->string('role')->default('user'); // デフォルトを'user'に設定
+                $table->string('role')->default('user');
             }
         });
     }
