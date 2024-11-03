@@ -29,13 +29,13 @@
    git clone <リポジトリURL>
 
 2. Dockerコンテナをビルドして起動します
-```bash
+   ```bash
    docker-compose up -d --build
 
 
 ### Laravel環境構築
 
-1. **PHPコンテナに入ります**：
+1. PHPコンテナに入ります：
 
    ```bash
    docker-compose exec php bash
@@ -47,25 +47,25 @@
    composer install
 
 
-3. **環境変数ファイルを設定します：**：
+3. 環境変数ファイルを設定します：
 
    ```bash
    cp .env.example .env
 
 
-4. **アプリケーションキーを生成します：**：
+4. アプリケーションキーを生成します：
 
    ```bash
    php artisan key:generate
 
 
-5. **データベースをマイグレーションします：**：
+5. データベースをマイグレーションします：
 
    ```bash
    php artisan migrate
 
 
-6. **データベースをシーディングします：**：
+6. データベースをシーディングします：
 
    ```bash
    php artisan db:seed
@@ -134,24 +134,24 @@
 
 #### CSVファイルの記述方法
 
-CSVファイルのサンプル（ヘッダー付き）：
+#### CSVファイルのサンプル（ヘッダー付き）：
 
-```csv
-name,area,genre,about,photo
-リストランテ,大阪府,イタリアン,シェフ自慢のイタリアン料理を堪能できるおしゃれなレストラン。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
-炭,大阪府,焼肉,最高級の和牛を提供する焼肉の名店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
-はかた,福岡県,居酒屋,地元の旬の素材を活かした一品料理が楽しめる居酒屋。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg
-大将,大阪府,ラーメン,秘伝のスープと手作り麺の本格ラーメン店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/ramen.jpg
-パスタ工房,大阪府,イタリアン,手作りの新鮮なパスタが自慢のイタリアン店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
-焼肉本舗,東京都,焼肉,厳選された上質な和牛を提供する焼肉店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
-酒場まる,福岡県,居酒屋,アットホームな雰囲気でくつろげる居酒屋。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg
-ラーメン一筋,東京都,ラーメン,こだわりのスープともちもちの麺が特徴のラーメン屋。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/ramen.jpg
-オステリア,東京都,イタリアン,本場の味を再現したイタリアンレストラン。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
-焼肉タウン,福岡県,焼肉,地元で人気のリーズナブルな焼肉店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
-夜の酒場,大阪府,居酒屋,美味しい料理とお酒を楽しめる落ち着いた居酒屋。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg
-麺道場,福岡県,ラーメン,特製スープと手打ち麺が自慢のラーメン専門店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/ramen.jpg
-イタリアンカフェ,大阪府,イタリアン,カジュアルに楽しめる本格イタリアンカフェ。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
-和牛苑,東京都,焼肉,とろけるような和牛が楽しめる高級焼肉店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
+   ```bash
+   name,area,genre,about,photo
+   リストランテ,大阪府,イタリアン,シェフ自慢のイタリアン料理を堪能できるおしゃれなレストラン。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
+   炭,大阪府,焼肉,最高級の和牛を提供する焼肉の名店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
+   はかた,福岡県,居酒屋,地元の旬の素材を活かした一品料理が楽しめる居酒屋。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg
+   大将,大阪府,ラーメン,秘伝のスープと手作り麺の本格ラーメン店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/ramen.jpg
+   パスタ工房,大阪府,イタリアン,手作りの新鮮なパスタが自慢のイタリアン店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
+   焼肉本舗,東京都,焼肉,厳選された上質な和牛を提供する焼肉店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
+   酒場まる,福岡県,居酒屋,アットホームな雰囲気でくつろげる居酒屋。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg
+   ラーメン一筋,東京都,ラーメン,こだわりのスープともちもちの麺が特徴のラーメン屋。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/ramen.jpg
+   オステリア,東京都,イタリアン,本場の味を再現したイタリアンレストラン。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
+   焼肉タウン,福岡県,焼肉,地元で人気のリーズナブルな焼肉店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
+   夜の酒場,大阪府,居酒屋,美味しい料理とお酒を楽しめる落ち着いた居酒屋。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/izakaya.jpg
+   麺道場,福岡県,ラーメン,特製スープと手打ち麺が自慢のラーメン専門店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/ramen.jpg
+   イタリアンカフェ,大阪府,イタリアン,カジュアルに楽しめる本格イタリアンカフェ。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
+   和牛苑,東京都,焼肉,とろけるような和牛が楽しめる高級焼肉店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
 
 
 ## 使用技術
