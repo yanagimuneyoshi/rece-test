@@ -21,6 +21,8 @@
 - Laravel 8.0.26
 - Docker, Docker Compose
 
+
+
 ### Dockerビルド
 
 1. リポジトリをクローンします：
@@ -145,9 +147,3 @@
    イタリアンカフェ,大阪府,イタリアン,カジュアルに楽しめる本格イタリアンカフェ。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/italian.jpg
    和牛苑,東京都,焼肉,とろけるような和牛が楽しめる高級焼肉店。,https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/yakiniku.jpg
 
-
-## 使用技術
-
-- **PHP**: 7.4.9
-- **Laravel**: 8.0.26
-- **Docker**
