@@ -10,7 +10,6 @@
 2. **店舗一覧ソート機能**：ユーザーが店舗をランダムや評価順で並び替え
 3. **CSVインポート機能**：管理者がCSVを使って店舗情報を一括追加
 
-**期限**：1週間
 
 ---
 
@@ -40,37 +39,30 @@
    ```bash
    docker-compose exec php bash
 
-
 2. **Composerの依存関係をインストールします：**：
 
    ```bash
    composer install
-
 
 3. 環境変数ファイルを設定します：
 
    ```bash
    cp .env.example .env
 
-
 4. アプリケーションキーを生成します：
 
    ```bash
    php artisan key:generate
-
 
 5. データベースをマイグレーションします：
 
    ```bash
    php artisan migrate
 
-
 6. データベースをシーディングします：
 
    ```bash
    php artisan db:seed
-
-
 
 ### URL
 
