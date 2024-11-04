@@ -129,7 +129,6 @@
           });
       });
 
-      // ハンバーガーメニューのトグル
       const btnMenu = document.getElementById('btn_menu8');
       const navMenu = document.getElementById('nav-menu');
       const navOverlay = document.getElementById('nav-overlay');

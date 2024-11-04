@@ -265,10 +265,6 @@ input {
 }
 
 
-
-
-
-
 .home,
 .logout,
 .mypage,
@@ -338,7 +334,6 @@ button.logout {
   padding: 0;
 }
 
-/* 検索フォームのスタイル */
 .search-form {
   display: flex;
   align-items: center;
